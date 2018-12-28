@@ -1,0 +1,93 @@
+package lz77grammar;
+
+import java.util.HashSet;
+
+public class Branch implements Node, Cloneable {
+
+	private Node left;
+	private Node right;
+	private String name;
+
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public HashSet<String> addChildren(HashSet<String> set) {
+		set = left.addChildren(set);
+		set = right.addChildren(set);
+		set.add(evaluate());
+		return set;
+	}
+
+	@Override
+	public void printProduction() {
+		System.out.println("(" +getName() + ") -> " + "("+left.getName()+")" + "("+right.getName()+")");
+	}
+
+	@Override
+	public String getText() {
+		return this.name;
+	}
+
+	@Override
+	public Branch clone() {
+		try {
+			Branch b = (Branch) super.clone();
+			b.left = left.clone();
+			b.right = right.clone();
+			return b;
+		} catch (CloneNotSupportedException e) {
+            return null;
+        }
+	}
+
+	@Override
+	public String evaluate() {
+		return left.evaluate() + right.evaluate();
+	}
+
+	public Branch(String name, Node left, Node right) {
+		super();
+		this.name = name;
+		this.left = left;
+		this.right = right;
+	}
+	
+	public Branch() {
+		super();
+	}
+
+	@Override
+	public int getHeight() {
+		return 1 + Math.max(left.getHeight(), right.getHeight());
+	}
+
+	public Node getLeft() {
+		return left;
+	}
+
+	public void setLeft(Node left) {
+		this.left = left;
+	}
+
+	public Node getRight() {
+		return right;
+	}
+
+	public void setRight(Node right) {
+		this.right = right;
+	}
+
+	@Override
+	public int getBalance() {
+		// TODO Auto-generated method stub
+		return left.getHeight() - right.getHeight();
+	}
+}
