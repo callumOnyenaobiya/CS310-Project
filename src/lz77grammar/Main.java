@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Main {
-
+// NEED TO CREATE G FACTORS. SEE PAPER FOR DETAILS!
 	public static void main(String[] args) throws Exception {
 		Converter converter = new Converter();
 
@@ -29,7 +29,7 @@ public class Main {
 		}
 		
 		System.out.println("Parse tree: ");
-		//treeprinter.print(node);
+		treeprinter.print(node);
 
 		System.out.println("Balance = " + node.getBalance());
 		
@@ -39,6 +39,8 @@ public class Main {
 			converter.getNodes().get(s).printProduction();
 		}
 		System.out.println("Done");
+		System.out.println("LZ77 factors: " + result.length);
+		System.out.println("Grammar factors: " + set.size());
 	}
 }
 /*
