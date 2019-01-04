@@ -1,11 +1,12 @@
 package lz77grammar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class Main {
-// NEED TO CREATE G FACTORS. SEE PAPER FOR DETAILS!
 	public static void main(String[] args) throws Exception {
 		Converter converter = new Converter();
 
@@ -17,10 +18,8 @@ public class Main {
 		System.out.println("String to factorise: ");
 		lz77.decompress(list);
 		String[] result = lz77.getTuples(list);
-		System.out.println("LZ77 factorization: ");
-		for(String s : result) {
-			System.out.println(s);
-		}
+		//String[] result = {"a","b","a","aba","baaba","ab"};
+		
 
 		System.out.println("Computing grammar...");
 		node = converter.create(result[0]);
@@ -32,15 +31,25 @@ public class Main {
 		treeprinter.print(node);
 
 		System.out.println("Balance = " + node.getBalance());
+		System.out.println("Height = " + node.getHeight());
 		
 		System.out.println("Production Rules: ");
 		Set<String> set = node.addChildren(new HashSet<String>());
 		for(String s: set) {
 			converter.getNodes().get(s).printProduction();
 		}
-		System.out.println("Done");
 		System.out.println("LZ77 factors: " + result.length);
-		System.out.println("Grammar factors: " + set.size());
+		for(String s : result) {
+			System.out.println("- " + s);
+		}
+		System.out.println("G factors: " + result.length);
+		
+		HashMap<String, Integer> map = converter.gFactors(node, new HashMap<String, Integer>());
+		for (Map.Entry<String, Integer> entry : map.entrySet()) {
+			  for(int i = 0; i < entry.getValue(); i++) {
+				  System.out.println("- " + entry.getKey());
+			  }
+			}
 	}
 }
 /*

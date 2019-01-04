@@ -2,6 +2,7 @@ package lz77grammar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -28,6 +29,28 @@ public class Converter {
 		//System.out.println(index);
 	}
 
+	public HashMap<String, Integer> gFactors(Node root, HashMap<String, Integer> map){
+		if(root instanceof Terminal) {
+			map.put(root.evaluate(), zeroIfNull(map.get(root.evaluate()))+1);
+			return map;
+		}
+		if(map.containsKey(root.evaluate())) {
+			map.put(root.evaluate(), zeroIfNull(map.get(root.evaluate()))+1);
+			return map;
+		} else {
+			map.put(root.evaluate(), 0);
+		}
+		map = gFactors(root.getLeft(), map);
+		map = gFactors(root.getRight(), map);
+		return map;
+	}
+	
+	public int zeroIfNull(Integer a) {
+		if(a != null) {
+			return a;
+		}
+		return 0;
+	}
 	public Node concatenate(Node a, Node b) {
 		TreePrinter treeprinter = new TreePrinter();
 		Node newNode = null;
@@ -178,7 +201,7 @@ public class Converter {
 		//System.out.println(word + " not found");
 		List<List<String>> splits = decompose(word);
 		for(List<String> list : splits) {
-			if(hasNodes(list)) {
+			if(hasNodes(list, nodes)) {
 				//System.out.println("Can get from: ");
 				for(String s : list) {
 					//System.out.print(s + ",");
@@ -194,7 +217,7 @@ public class Converter {
 		return node;
 	}
 	
-	public boolean hasNodes(List<String> list) {
+	public boolean hasNodes(List<String> list, Map<String, Node> nodes) {
 		for(String s : list) {
 			if(!nodes.containsKey(s)) {
 				return false;
