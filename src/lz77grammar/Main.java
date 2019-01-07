@@ -8,9 +8,10 @@ import java.util.Set;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		Converter converter = new Converter();
+		/*Converter converter = new Converter();
 
 		TreePrinter treeprinter = new TreePrinter();
+		
 		Node node = null;
 		
 		LZ77 lz77 = new LZ77(32800, 250);
@@ -42,14 +43,38 @@ public class Main {
 		for(String s : result) {
 			System.out.println("- " + s);
 		}
-		System.out.println("G factors: " + result.length);
+		
 		
 		HashMap<String, Integer> map = converter.gFactors(node, new HashMap<String, Integer>());
+		int sum = 0;
+		for (Map.Entry<String, Integer> entry : map.entrySet()) {
+			  for(int i = 0; i < entry.getValue(); i++) {
+				  sum++;
+			  }
+		}
+		System.out.println("G factors: " + sum);
+		
 		for (Map.Entry<String, Integer> entry : map.entrySet()) {
 			  for(int i = 0; i < entry.getValue(); i++) {
 				  System.out.println("- " + entry.getKey());
 			  }
-			}
+		}
+		treeprinter.print(node);*/
+		CFG cfg = new CFG("test.txt");
+		System.out.println(cfg.map.get("S").isCyclic(new HashSet<String>()));
+		
+	}
+	
+	public static Node generateTree() {
+		Node nodex2 = new Terminal("X2", 'a');
+		Node nodex1 = new Terminal("X1", 'b');
+		
+		Node nodex3 = new Branch("X3", nodex2, nodex1);
+		Node nodex4 = new Branch("X4", nodex3, nodex2);
+		Node nodex5 = new Branch("X5", nodex4, nodex3);
+		Node nodex6 = new Branch("X6", nodex5, nodex4);
+		Node nodex7 = new Branch("X7", nodex6, nodex5);
+		return nodex7;
 	}
 }
 /*

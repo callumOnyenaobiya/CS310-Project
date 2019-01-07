@@ -31,10 +31,12 @@ public class Converter {
 
 	public HashMap<String, Integer> gFactors(Node root, HashMap<String, Integer> map){
 		if(root instanceof Terminal) {
+			System.out.println("G factor:" + root.evaluate());
 			map.put(root.evaluate(), zeroIfNull(map.get(root.evaluate()))+1);
 			return map;
 		}
 		if(map.containsKey(root.evaluate())) {
+			System.out.println("G factor:" + root.evaluate());
 			map.put(root.evaluate(), zeroIfNull(map.get(root.evaluate()))+1);
 			return map;
 		} else {
