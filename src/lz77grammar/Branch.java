@@ -8,7 +8,6 @@ public class Branch implements Node, Cloneable {
 	private Node right;
 	private String name;
 
-
 	@Override
 	public String getName() {
 		return name;
@@ -28,7 +27,7 @@ public class Branch implements Node, Cloneable {
 
 	@Override
 	public void printProduction() {
-		System.out.println("(" +getName() + ") -> " + "("+left.getName()+")" + "("+right.getName()+")");
+		System.out.println("(" + getName() + ") -> " + "(" + left.getName() + ")" + "(" + right.getName() + ")");
 	}
 
 	@Override
@@ -44,8 +43,8 @@ public class Branch implements Node, Cloneable {
 			b.right = right.clone();
 			return b;
 		} catch (CloneNotSupportedException e) {
-            return null;
-        }
+			return null;
+		}
 	}
 
 	@Override
@@ -59,7 +58,7 @@ public class Branch implements Node, Cloneable {
 		this.left = left;
 		this.right = right;
 	}
-	
+
 	public Branch() {
 		super();
 	}

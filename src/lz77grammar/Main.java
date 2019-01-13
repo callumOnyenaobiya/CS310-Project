@@ -8,10 +8,12 @@ import java.util.Set;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		/*Converter converter = new Converter();
+		
+		Converter converter = new Converter();
 
 		TreePrinter treeprinter = new TreePrinter();
 		
+		/*
 		Node node = null;
 		
 		LZ77 lz77 = new LZ77(32800, 250);
@@ -60,8 +62,16 @@ public class Main {
 			  }
 		}
 		treeprinter.print(node);*/
+		
+		
 		CFG cfg = new CFG("test.txt");
-		System.out.println(cfg.map.get("S").isCyclic(new HashSet<String>()));
+		System.out.println(cfg.isCyclic());
+		System.out.println(cfg.evaluate());
+		System.out.println(cfg.isCNF());
+		Node node = cfg.toTree();
+		treeprinter.print(node);
+		converter.gFactors(node, new HashMap<String, Integer>());
+		
 		
 	}
 	

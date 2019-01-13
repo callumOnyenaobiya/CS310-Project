@@ -245,8 +245,8 @@ public class Converter {
 	        result.add(append);
 	        result.add(add);
 	    }
-	    //result.sort((xs1, xs2) -> xs1.size() - xs2.size());
-	    return result;
+		// result.sort((xs1, xs2) -> xs1.size() - xs2.size());
+		return result;
 	}
 
 }
