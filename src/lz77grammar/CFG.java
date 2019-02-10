@@ -37,11 +37,20 @@ public class CFG {
 			e.printStackTrace();
 		}
 	}
+	
+	public Node toBalancedTree() {
+		return toBalancedTree(map.get("S"));
+	}
 
+	public Node toBalancedTree(NonTerminal nonTerminal) {
+		nonTerminal.evaluate();
+		return null;
+	}
+	
 	public Node toTree() {
 		return toTree(map.get("S"));
 	}
-
+	
 	// TODO - fix this function
 	public Node toTree(NonTerminal nonTerminal) {
 		if (!isCNF()) {
@@ -64,7 +73,7 @@ public class CFG {
 				productions.add(nonTerminalName);
 				nonTerminalName = "";
 			} else if ((c == ')') && !isNonTerminal) {
-				System.out.println("WHAT THE FUCK?");
+				System.out.println("Should error");
 			} else if (isNonTerminal) {
 				nonTerminalName = nonTerminalName + c;
 			} else {
@@ -168,7 +177,7 @@ public class CFG {
 		private String processLeft(String left) {
 			left = left.replaceAll("\\s+", "");
 			if ((left.charAt(0) != '(') || (left.charAt(left.length() - 1) != ')')) {
-				System.out.println("WHAT?");
+				System.out.println("Should error here");
 				return null;
 			}
 			return left.substring(1, left.length() - 1);
@@ -187,7 +196,7 @@ public class CFG {
 					result = result + map.get(nonTerminal).evaluate();
 					nonTerminal = "";
 				} else if ((c == ')') && !isNonTerminal) {
-					System.out.println("WHAT THE FUCK?");
+					System.out.println("Should error here");
 				} else if (isNonTerminal) {
 					nonTerminal = nonTerminal + c;
 				} else {

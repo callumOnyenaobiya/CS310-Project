@@ -26,7 +26,6 @@ public class Converter {
 			nodes.put(String.valueOf((char) i), new Terminal("X" + index, (char) i));
 			index++;
 		}
-		//System.out.println(index);
 	}
 
 	public HashMap<String, Integer> gFactors(Node root, HashMap<String, Integer> map){
@@ -70,8 +69,6 @@ public class Converter {
 			return nodes.get(newNode.evaluate());
 		}
 		addNode(newNode.evaluate(), newNode);
-		//System.out.println(newNode.evaluate() + " = " + (index-1));
-		//treeprinter.print(newNode);
 		return newNode;
 	}
 	
@@ -81,7 +78,6 @@ public class Converter {
 		while(current.getLeft().getHeight() - a.getHeight() > 1) {
 			current = current.getLeft();
 		}
-		//System.out.println("LCONCAT: "+ index);
 		newNode = new Branch("X" + index++, a, current.getLeft());
 		if(!nodes.containsKey(newNode.evaluate())) {
 			addNode(newNode.evaluate(), newNode);
@@ -114,7 +110,6 @@ public class Converter {
 		while(current.getRight().getHeight() - b.getHeight() > 1) {
 			current = current.getRight();
 		}
-		//System.out.println("RCONCAT: "+ index);
 		newNode = new Branch("X" + index++, current.getRight(), b);
 		if(!nodes.containsKey(newNode.evaluate())) {
 			addNode(newNode.evaluate(), newNode);
