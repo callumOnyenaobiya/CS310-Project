@@ -33,6 +33,18 @@ public class Terminal implements Node, Cloneable {
 		this.name = name;
 	}
 
+	
+	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return 1;
+	}
+
+	@Override
+	public char get(int i) {
+		return this.character;
+	}
+
 	@Override
 	public void printProduction() {
 		System.out.println("(" + name + ")" + " -> " + evaluate());

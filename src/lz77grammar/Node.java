@@ -6,6 +6,8 @@ public interface Node {
 	public String evaluate();
 	public String getText();
 	public String getName();
+	public int size();
+	public char get(int i);
 	public void setName(String name);
 	public int getHeight();
 	public int getBalance();

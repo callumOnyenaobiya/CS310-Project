@@ -18,6 +18,20 @@ public class Branch implements Node, Cloneable {
 	}
 
 	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return left.size() + right.size();
+	}
+
+	@Override
+	public char get(int i) {
+		if(left.size() > i) {
+			return left.get(i);
+		}
+		return right.get(i - left.size());
+	}
+
+	@Override
 	public HashSet<String> addChildren(HashSet<String> set) {
 		set = left.addChildren(set);
 		set = right.addChildren(set);

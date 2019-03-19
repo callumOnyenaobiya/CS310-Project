@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Stack;
 
 public class Converter {
+	TreePrinter treeprinter;
 	private Map<String, Node> nodes;
 	int index;
 	
@@ -26,6 +27,7 @@ public class Converter {
 			nodes.put(String.valueOf((char) i), new Terminal("X" + index, (char) i));
 			index++;
 		}
+		treeprinter = new TreePrinter();
 	}
 
 	public HashMap<String, Integer> gFactors(Node root, HashMap<String, Integer> map){
@@ -139,11 +141,15 @@ public class Converter {
 
 	public Node leftBalance(Node node) {
 		if(node.getLeft().getHeight() == node.getRight().getHeight() + 2) {
+			System.out.println("Lbalancing!");
+			treeprinter.print(node);
 			if(node.getLeft().getLeft().getHeight() > node.getLeft().getRight().getHeight()) {
 				return leftRotation1(node);
 			} else if (node.getLeft().getRight().getHeight() > node.getLeft().getLeft().getHeight()) {
 				return leftRotation2(node);
 			}
+			System.out.println("here");
+			treeprinter.print(node);
 			return node;
 		}
 		return node;
@@ -165,6 +171,8 @@ public class Converter {
 	
 	public Node rightBalance(Node node) {
 		if(node.getRight().getHeight() == node.getLeft().getHeight() + 2) {
+			System.out.println("Rbalancing!");
+			treeprinter.print(node);
 			if(node.getRight().getRight().getHeight() > node.getRight().getLeft().getHeight()) {
 				return rightRotation1(node);
 			} else if (node.getRight().getLeft().getHeight() > node.getRight().getRight().getHeight()) {
@@ -192,18 +200,18 @@ public class Converter {
 	public Node create(String word) {
 		Node node = null;
 		if(nodes.containsKey(word)) {
-			//System.out.println(word + " found");
+			System.out.println(word + " found");
 			return nodes.get(word);
 		}
-		//System.out.println(word + " not found");
+		System.out.println(word + " not found");
 		List<List<String>> splits = decompose(word);
 		for(List<String> list : splits) {
 			if(hasNodes(list, nodes)) {
-				//System.out.println("Can get from: ");
+				System.out.println("Can get from: ");
 				for(String s : list) {
-					//System.out.print(s + ",");
+					System.out.print(s + ",");
 				}
-				//System.out.println("");
+				System.out.println("");
 				node = nodes.get(list.get(0));
 				for(int i = 1; i < list.size(); i++) {
 					node = concatenate(node, nodes.get(list.get(i)));
@@ -211,6 +219,7 @@ public class Converter {
 				break;
 			}
 		}
+		treeprinter.print(node);
 		return node;
 	}
 	

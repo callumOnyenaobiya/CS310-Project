@@ -91,6 +91,9 @@ public class LZ77 implements Serializable {
 				} else {
 					offset = searchWindowLen - matchLoc;
 				}
+				if(matchLen == 0) {
+					offset = 0;
+				}
 				// Get and save the next non-matching character in
 				// the lookAhead window.
 				String nextChar = rawData.substring(headPos, headPos + 1);

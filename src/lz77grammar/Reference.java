@@ -24,4 +24,10 @@ public class Reference implements Serializable {
 	}// end constructor
 		// ---------------------------------------------------//
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Offset: " + offset + ", stringLen :" + stringLen + ", nextChar: " + nextChar;
+	}
+
 }
