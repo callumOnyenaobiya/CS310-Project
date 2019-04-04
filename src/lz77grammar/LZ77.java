@@ -1,19 +1,40 @@
 package lz77grammar;
 
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class LZ77 implements Serializable {
+public class LZ77 {
 
-	int searchWindowLen;
-	int lookAheadWindowLen;
+	private int searchWindowLen;
+	private int lookAheadWindowLen;
 
+	
 	public LZ77(int searchWindowLen, int lookAheadWindowLen) {
 		this.searchWindowLen = searchWindowLen;
 		this.lookAheadWindowLen = lookAheadWindowLen;
 	}
+
+	
+	public int getSearchWindowLen() {
+		return searchWindowLen;
+	}
+
+
+	public void setSearchWindowLen(int searchWindowLen) {
+		this.searchWindowLen = searchWindowLen;
+	}
+
+
+	public int getLookAheadWindowLen() {
+		return lookAheadWindowLen;
+	}
+
+
+	public void setLookAheadWindowLen(int lookAheadWindowLen) {
+		this.lookAheadWindowLen = lookAheadWindowLen;
+	}
+
 
 	public ArrayList<Reference> compress(String file) throws Exception {
 		Reference thisReference;
@@ -123,7 +144,7 @@ public class LZ77 implements Serializable {
 		return encodedData;
 	}
 
-	void decompress(ArrayList<Reference> encodedData) {
+	String decompress(ArrayList<Reference> encodedData) {
 		StringBuffer reconData = new StringBuffer();
 		for (Reference next : encodedData) {
 			if (next.stringLen == 0) {
@@ -136,7 +157,7 @@ public class LZ77 implements Serializable {
 				reconData.append(next.nextChar);
 			}
 		}
-		System.out.println(new String(reconData));
+		return new String(reconData);
 	}
 
 	String[] getTuples(ArrayList<Reference> encodedData) {

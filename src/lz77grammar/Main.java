@@ -1,5 +1,11 @@
 package lz77grammar;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,15 +18,26 @@ public class Main {
 
 	static Converter converter;
 	static TreePrinter treeprinter;
-	static SequenceStore signature;
+	static SequenceStore signatureStore;
+	static LZ77 lz77Compressor;
 
 	public static void main(String[] args) throws Exception {
 
 		converter = new Converter();
 
 		treeprinter = new TreePrinter();
+		
+		signatureStore = new SequenceStore();
+		
+		lz77Compressor = new LZ77(32800, 250);
 
 		switch (args[1]) {
+		case "-c":
+			compressToFile(args[0]);
+			break;
+		case "-d":
+			decompress(args[0]);
+			break;
 		case "c":
 			compressAndBuild(args[0]);
 			break;
@@ -58,6 +75,45 @@ public class Main {
 
 	}
 	
+	public static void compressToFile(String file) throws Exception {
+		LZ77file lz77file = new LZ77file(lz77Compressor.compress(file),
+				lz77Compressor.getSearchWindowLen(),
+				lz77Compressor.getSearchWindowLen(),
+				signatureStore.createSig(new String(Files.readAllBytes(Paths.get(file)))));
+        try {
+            FileOutputStream fileOut = new FileOutputStream(file + ".lz77");
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(lz77file);
+            objectOut.close();
+            System.out.println("File successfully compressed");
+ 
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+	}
+		
+	public static void decompress(String file) {
+		LZ77file lz77file;
+		LZ77 decompressor;
+        try {
+            FileInputStream fileIn = new FileInputStream(file);
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+ 
+            Object obj = objectIn.readObject();
+ 
+            System.out.println("The Object has been read from the file");
+            objectIn.close();
+            lz77file  = (LZ77file) obj;
+ 
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return;
+        }
+        
+        decompressor = new LZ77(lz77file.getSearchWindowLen(), lz77file.getLookAheadWindowLen());
+        System.out.println(decompressor.decompress(lz77file.getList()));
+        
+	}
 	public static void compressAndBuild(String file) throws Exception {
 		Node node = null;
 
