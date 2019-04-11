@@ -1,6 +1,7 @@
 package lz77grammar;
 
 import java.util.HashSet;
+import java.util.List;
 
 public class Branch implements Node, Cloneable {
 

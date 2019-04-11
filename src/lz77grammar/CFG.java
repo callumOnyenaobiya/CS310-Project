@@ -38,21 +38,11 @@ public class CFG {
 		}
 	}
 	
-	public Node toBalancedTree() {
-		return toBalancedTree(map.get("S"));
-	}
-
-	public Node toBalancedTree(NonTerminal nonTerminal) {
-		nonTerminal.evaluate();
-		return null;
+	public CnfGrammar toCnfGrammar() {
+		return new CnfGrammar(toCnfGrammar(map.get("S")));
 	}
 	
-	public Node toTree() {
-		return toTree(map.get("S"));
-	}
-	
-	// TODO - fix this function
-	public Node toTree(NonTerminal nonTerminal) {
+	public Node toCnfGrammar(NonTerminal nonTerminal) {
 		if (!isCNF()) {
 			System.out.println("CNF only");
 			return null;
@@ -84,7 +74,7 @@ public class CFG {
 		if (productions.size() == 1) {
 			return new Terminal(name, productions.get(0).charAt(0));
 		} else {
-			return new Branch(name, toTree(map.get(productions.get(0))), toTree(map.get(productions.get(1))));
+			return new Branch(name, toCnfGrammar(map.get(productions.get(0))), toCnfGrammar(map.get(productions.get(1))));
 		}
 	}
 

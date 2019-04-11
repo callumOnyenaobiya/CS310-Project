@@ -11,8 +11,8 @@ public class TreePrinter {
 	 * @param root tree root node
 	 */
 	public void print(Node root) {
+		
 		List<List<String>> lines = new ArrayList<List<String>>();
-
 		List<Node> level = new ArrayList<Node>();
 		List<Node> next = new ArrayList<Node>();
 

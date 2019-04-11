@@ -20,10 +20,12 @@ public class Main {
 	static TreePrinter treeprinter;
 	static SequenceStore signatureStore;
 	static LZ77 lz77Compressor;
-
+	static int tutorialMode;
+	
 	public static void main(String[] args) throws Exception {
 
-		converter = new Converter();
+		tutorialMode = 0;
+		converter = new Converter(tutorialMode);
 
 		treeprinter = new TreePrinter();
 		
@@ -32,6 +34,9 @@ public class Main {
 		lz77Compressor = new LZ77(32800, 250);
 
 		switch (args[1]) {
+		case"g":
+			gFactors(args[0]);
+			break;
 		case "-c":
 			compressToFile(args[0]);
 			break;
@@ -114,6 +119,20 @@ public class Main {
         System.out.println(decompressor.decompress(lz77file.getList()));
         
 	}
+	
+	public static void gFactors(String file) throws Exception {
+		CnfGrammar cnf = null;
+		LZ77 lz77 = new LZ77(32800, 250);
+		ArrayList<Reference> list = lz77.compress(file);
+		String[] result = lz77.getTuples(list);
+		cnf = converter.constructGrammar(result);
+		treeprinter.print(cnf.startNode);
+		System.out.println("our gfactors:");
+		for(String s : cnf.gFactors) {
+			System.out.println(s);
+		}
+	}
+	
 	public static void compressAndBuild(String file) throws Exception {
 		Node node = null;
 
@@ -125,7 +144,7 @@ public class Main {
 		System.out.println("String to factorise: ");
 		lz77.decompress(list);
 		String[] result = lz77.getTuples(list);
-		System.out.println("LZ77 factorisation: ");
+		System.out.println("LZ77 factorgsation: ");
 		for(String s : result) {
 			System.out.println(s);
 		}
@@ -162,11 +181,14 @@ public class Main {
 		System.out.println("Is in CNF: " + cfg.isCNF());
 		System.out.println("Evaluation: " + cfg.evaluate());
 		System.out.println("Is cyclic: " + cfg.isCyclic());
-		Node node = cfg.toTree();
-		treeprinter.print(node);
-		converter.gFactors(node, new HashMap<String, Integer>());
+		CnfGrammar cnfGrammar = cfg.toCnfGrammar();
+		cnfGrammar.printTree();
+		cnfGrammar.balanceGrammar(tutorialMode);
+		cnfGrammar.printTree();
 	}
 
+	
+	// We can now write this in a grammar file.
 	public static Node generateTree() {
 		Node nodex2 = new Terminal("X2", 'a');
 		Node nodex1 = new Terminal("X1", 'b');

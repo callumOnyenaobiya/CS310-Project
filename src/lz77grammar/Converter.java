@@ -11,16 +11,10 @@ public class Converter {
 	TreePrinter treeprinter;
 	private Map<String, Node> nodes;
 	int index;
+	int tutorialMode;
 	
-	public Map<String, Node> getNodes() {
-		return nodes;
-	}
-	
-	public void addNode(String string, Node node) {
-		nodes.put(string, node);
-	}
-	
-	public Converter() {
+	public Converter(int tutorialMode) {
+		this.tutorialMode = tutorialMode;
 		this.index = 0;
 		nodes = new HashMap<String, Node>();
 		for (int i = 0; i <= 255; i++) {
@@ -29,36 +23,53 @@ public class Converter {
 		}
 		treeprinter = new TreePrinter();
 	}
-
-	public HashMap<String, Integer> gFactors(Node root, HashMap<String, Integer> map){
-		if(root instanceof Terminal) {
-			System.out.println("G factor:" + root.evaluate());
-			map.put(root.evaluate(), zeroIfNull(map.get(root.evaluate()))+1);
-			return map;
-		}
-		if(map.containsKey(root.evaluate())) {
-			System.out.println("G factor:" + root.evaluate());
-			map.put(root.evaluate(), zeroIfNull(map.get(root.evaluate()))+1);
-			return map;
-		} else {
-			map.put(root.evaluate(), 0);
-		}
-		map = gFactors(root.getLeft(), map);
-		map = gFactors(root.getRight(), map);
-		return map;
+	
+	public Map<String, Node> getNodes() {
+		return nodes;
 	}
 	
-	public int zeroIfNull(Integer a) {
-		if(a != null) {
-			return a;
-		}
-		return 0;
+	public void addNode(String string, Node node) {
+		nodes.put(string, node);
 	}
+
+	public CnfGrammar constructGrammar(String[] factors) {
+		Node node = create(factors[0]);
+		tutorialTree(node);
+		for (int i = 1; i < factors.length; i++) {
+			node = concatenate(node, create(factors[i]));
+			tutorialTree(node);
+		}
+		return new CnfGrammar(node);
+	}
+	
+//	public Map<String, Integer> gFactors(Node root, Map<String, Integer> map){
+//		if(root instanceof Terminal) {
+//			tutorialMode(("G factor:" + root.evaluate());
+//			map.put(root.evaluate(), zeroIfNull(map.get(root.evaluate()))+1);
+//			return map;
+//		}
+//		if(map.containsKey(root.evaluate())) {
+//			tutorialMode(("G factor:" + root.evaluate());
+//			map.put(root.evaluate(), zeroIfNull(map.get(root.evaluate()))+1);
+//			return map;
+//		} else {
+//			map.put(root.evaluate(), 0);
+//		}
+//		map = gFactors(root.getLeft(), map);
+//		map = gFactors(root.getRight(), map);
+//		return map;
+//	}
+	
+//	public int zeroIfNull(Integer a) {
+//		if(a != null) {
+//			return a;
+//		}
+//		return 0;
+//	}
+	
 	public Node concatenate(Node a, Node b) {
-		TreePrinter treeprinter = new TreePrinter();
 		Node newNode = null;
 		if(Math.abs(a.getHeight() - b.getHeight()) <= 1) {
-			//System.out.println("CONCAT: "+ index);
 			newNode = new Branch("X" + index++, a, b);
 		}
 		else if(a.getHeight() > b.getHeight()) {
@@ -141,15 +152,12 @@ public class Converter {
 
 	public Node leftBalance(Node node) {
 		if(node.getLeft().getHeight() == node.getRight().getHeight() + 2) {
-			System.out.println("Lbalancing!");
-			treeprinter.print(node);
+			tutorialMode("Left balance required");
 			if(node.getLeft().getLeft().getHeight() > node.getLeft().getRight().getHeight()) {
 				return leftRotation1(node);
 			} else if (node.getLeft().getRight().getHeight() > node.getLeft().getLeft().getHeight()) {
 				return leftRotation2(node);
 			}
-			System.out.println("here");
-			treeprinter.print(node);
 			return node;
 		}
 		return node;
@@ -171,8 +179,7 @@ public class Converter {
 	
 	public Node rightBalance(Node node) {
 		if(node.getRight().getHeight() == node.getLeft().getHeight() + 2) {
-			System.out.println("Rbalancing!");
-			treeprinter.print(node);
+			tutorialMode("Right balance required");
 			if(node.getRight().getRight().getHeight() > node.getRight().getLeft().getHeight()) {
 				return rightRotation1(node);
 			} else if (node.getRight().getLeft().getHeight() > node.getRight().getRight().getHeight()) {
@@ -200,18 +207,18 @@ public class Converter {
 	public Node create(String word) {
 		Node node = null;
 		if(nodes.containsKey(word)) {
-			System.out.println(word + " found");
+			tutorialMode(word + " found");
 			return nodes.get(word);
 		}
-		System.out.println(word + " not found");
+		tutorialMode(word + " not found");
 		List<List<String>> splits = decompose(word);
 		for(List<String> list : splits) {
 			if(hasNodes(list, nodes)) {
-				System.out.println("Can get from: ");
+				tutorialMode("Can get from: ");
 				for(String s : list) {
 					System.out.print(s + ",");
 				}
-				System.out.println("");
+				tutorialMode("");
 				node = nodes.get(list.get(0));
 				for(int i = 1; i < list.size(); i++) {
 					node = concatenate(node, nodes.get(list.get(i)));
@@ -219,7 +226,7 @@ public class Converter {
 				break;
 			}
 		}
-		treeprinter.print(node);
+		tutorialTree(node);
 		return node;
 	}
 	
@@ -249,8 +256,19 @@ public class Converter {
 	        result.add(append);
 	        result.add(add);
 	    }
-		// result.sort((xs1, xs2) -> xs1.size() - xs2.size());
 		return result;
+	}
+	
+	public void tutorialMode(String string) {
+		if(tutorialMode == 1) {
+			System.out.println(string);
+		}
+	}
+	
+	public void tutorialTree(Node node) {
+		if(tutorialMode == 1) {
+			treeprinter.print(node);
+		}
 	}
 
 }
