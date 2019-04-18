@@ -34,10 +34,8 @@ public class Converter {
 
 	public CnfGrammar constructGrammar(String[] factors) {
 		Node node = create(factors[0]);
-		tutorialTree(node);
 		for (int i = 1; i < factors.length; i++) {
 			node = concatenate(node, create(factors[i]));
-			tutorialTree(node);
 		}
 		return new CnfGrammar(node);
 	}
@@ -216,7 +214,7 @@ public class Converter {
 			if(hasNodes(list, nodes)) {
 				tutorialMode("Can get from: ");
 				for(String s : list) {
-					System.out.print(s + ",");
+					tutorialMode(s + ",");
 				}
 				tutorialMode("");
 				node = nodes.get(list.get(0));
@@ -270,5 +268,4 @@ public class Converter {
 			treeprinter.print(node);
 		}
 	}
-
 }

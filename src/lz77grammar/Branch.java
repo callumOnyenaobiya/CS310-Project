@@ -2,6 +2,7 @@ package lz77grammar;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Branch implements Node, Cloneable {
 
@@ -38,6 +39,17 @@ public class Branch implements Node, Cloneable {
 		set = right.addChildren(set);
 		set.add(evaluate());
 		return set;
+	}
+	
+	
+
+	@Override
+	public Set<String> getProductions(Set<String> productions) {
+		Set<String> newProductions = productions;
+		newProductions.add("(" + getName() + ") -> " + "(" + left.getName() + ")" + "(" + right.getName() + ")");
+		newProductions = left.getProductions(newProductions);
+		newProductions = right.getProductions(newProductions);
+		return newProductions;
 	}
 
 	@Override

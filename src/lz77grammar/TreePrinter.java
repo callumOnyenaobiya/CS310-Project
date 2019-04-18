@@ -8,13 +8,13 @@ public class TreePrinter {
 	/**
 	 * Print a tree
 	 * 
-	 * @param root tree root node
+	 * @param root tree root TreePrinterNode
 	 */
-	public void print(Node root) {
+	public void print(TreePrinterNode root) {
 		
 		List<List<String>> lines = new ArrayList<List<String>>();
-		List<Node> level = new ArrayList<Node>();
-		List<Node> next = new ArrayList<Node>();
+		List<TreePrinterNode> level = new ArrayList<TreePrinterNode>();
+		List<TreePrinterNode> next = new ArrayList<TreePrinterNode>();
 
 		level.add(root);
 		int nn = 1;
@@ -26,7 +26,7 @@ public class TreePrinter {
 
 			nn = 0;
 
-			for (Node n : level) {
+			for (TreePrinterNode n : level) {
 				if (n == null) {
 					line.add(null);
 
@@ -53,7 +53,7 @@ public class TreePrinter {
 
 			lines.add(line);
 
-			List<Node> tmp = level;
+			List<TreePrinterNode> tmp = level;
 			level = next;
 			next = tmp;
 			next.clear();
@@ -67,7 +67,7 @@ public class TreePrinter {
 			if (i > 0) {
 				for (int j = 0; j < line.size(); j++) {
 
-					// split node
+					// split TreePrinterNode
 					char c = ' ';
 					if (j % 2 == 1) {
 						if (line.get(j - 1) != null) {

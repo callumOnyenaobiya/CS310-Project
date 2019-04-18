@@ -2,35 +2,35 @@ package lz77grammar;
 
 import java.util.Objects;
 
-public class Pair<L, R> {
-	private L l;
-	private R r;
+public class Pair {
+	private Signature l;
+	private Signature r;
 
-	public Pair(L l, R r) {
+	public Pair(Signature l, Signature r) {
 		this.l = l;
 		this.r = r;
 	}
 
-	public L getL() {
+	public Signature getL() {
 		return l;
 	}
 
-	public R getR() {
+	public Signature getR() {
 		return r;
 	}
 
-	public void setL(L l) {
+	public void setL(Signature l) {
 		this.l = l;
 	}
 
-	public void setR(R r) {
+	public void setR(Signature r) {
 		this.r = r;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Pair<?, ?>) {
-			Pair<?, ?> pair = (Pair<?, ?>) obj;
+		if (obj instanceof Pair) {
+			Pair pair = (Pair) obj;
 			return l.equals(pair.getL()) && r.equals(pair.getR());
 		}
 		return false;

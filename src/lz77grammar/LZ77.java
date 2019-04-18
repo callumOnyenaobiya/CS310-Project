@@ -1,5 +1,6 @@
 package lz77grammar;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class LZ77 {
 	}
 
 
-	public ArrayList<Reference> compress(String file) throws Exception {
+	public ArrayList<Reference> compress(String rawData) {
 		Reference thisReference;
 		String searchSubstring;
 		int matchLen;
@@ -45,7 +46,7 @@ public class LZ77 {
 		int searchWindowStart;
 		int lookAheadWindowEnd;
 		ArrayList<Reference> encodedData = new ArrayList<Reference>();
-		String rawData = new String(Files.readAllBytes(Paths.get(file)));
+		//String rawData = new String(Files.readAllBytes(Paths.get(file)));
 		// System.out.println(rawData);
 		// System.out.println();//blank line
 

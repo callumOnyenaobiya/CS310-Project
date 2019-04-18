@@ -23,6 +23,16 @@ public class Signature implements Element {
 	}
 
 	@Override
+	public void setPow(int power) {
+		
+	}
+
+	@Override
+	public void setSig(int signature) {
+		this.signature = signature;
+	}
+
+	@Override
 	public int getSig() {
 		return this.signature;
 	}

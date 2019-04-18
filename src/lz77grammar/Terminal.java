@@ -21,6 +21,13 @@ public class Terminal implements Node, Cloneable {
 	}
 
 	@Override
+	public Set<String> getProductions(Set<String> productions) {
+		Set<String> newProductions = productions;
+		newProductions.add("(" + name + ")" + " -> " + evaluate());
+		return newProductions;
+	}
+
+	@Override
 	public String getText() {
 		return ("(" + name + " -> " + evaluate() + ")");
 	}

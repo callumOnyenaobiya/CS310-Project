@@ -1,5 +1,6 @@
 package lz77grammar;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,6 +46,10 @@ public class CnfGrammar {
 		loadGfactors();
 		Converter converter = new Converter(tutorialMode);
 		startNode = converter.constructGrammar(gFactors.toArray(new String[0])).startNode;
+	}
+	
+	public Set<String> getProductions() {
+		return startNode.getProductions(new HashSet<String>());
 	}
 
 	public void printTree() {
