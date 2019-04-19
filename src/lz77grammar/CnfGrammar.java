@@ -30,6 +30,10 @@ public class CnfGrammar {
 	public void setStartNode(Node startNode) {
 		this.startNode = startNode;
 	}
+	
+	public Boolean isBalanced() {
+		return this.startNode.getBalance() == 0 || this.startNode.getBalance() == 1;
+	}
 
 	public List<String> getgFactors() {
 		return gFactors;
@@ -75,4 +79,16 @@ public class CnfGrammar {
 	public void printTree() {
 		treeprinter.print(startNode);
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof CnfGrammar) {
+			CnfGrammar cnfGrammar = (CnfGrammar) obj;
+			return (startNode.equals(cnfGrammar.getStartNode()));
+		}
+		return false;
+	}
+
+	
+	
 }

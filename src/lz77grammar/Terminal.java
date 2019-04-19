@@ -41,8 +41,15 @@ public class Terminal implements Node, Cloneable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	
+	public char getCharacter() {
+		return character;
+	}
+
+	public void setCharacter(char character) {
+		this.character = character;
+	}
+
 	@Override
 	public int size() {
 		// TODO Auto-generated method stub
@@ -109,6 +116,15 @@ public class Terminal implements Node, Cloneable {
 	public Node getRight() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Terminal) {
+			Terminal t = (Terminal) obj;
+			return (name.equals(t.getName()) && character == t.getCharacter());
+		}
+		return false;
 	}
 
 }

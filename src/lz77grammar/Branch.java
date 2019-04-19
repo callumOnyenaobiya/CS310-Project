@@ -116,4 +116,14 @@ public class Branch implements Node, Cloneable {
 		// TODO Auto-generated method stub
 		return left.getHeight() - right.getHeight();
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Branch) {
+			Branch branch = (Branch) obj;
+			return (name.equals(branch.name) && left.equals(branch.getLeft()) && right.equals(branch.getRight()));
+		}
+		return false;
+	}
+
 }

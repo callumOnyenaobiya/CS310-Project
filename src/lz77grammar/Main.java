@@ -185,6 +185,9 @@ public class Main {
 		ArrayList<Reference> list = new ArrayList<Reference>();
 		try {
 			list = lz77Compressor.compress(new String(Files.readAllBytes(Paths.get(file))));
+			for(Reference r : list) {
+				System.out.println(r.toString());
+			}
 		}
 		catch (IOException ex) {
 			System.out.println("Unable to read file.");

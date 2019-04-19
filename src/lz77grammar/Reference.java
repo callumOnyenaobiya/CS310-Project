@@ -30,4 +30,15 @@ public class Reference implements Serializable {
 		return "Offset: " + offset + ", stringLen :" + stringLen + ", nextChar: " + nextChar;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Reference) {
+			Reference r = (Reference) obj;
+			return (offset == r.offset && stringLen == r.stringLen && nextChar.equals(r.nextChar));
+		}
+		return false;
+	}
+	
+	
+
 }
