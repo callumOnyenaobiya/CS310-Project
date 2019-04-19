@@ -12,27 +12,24 @@ import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
-@SuppressWarnings("unused")
-public class SignatureStore implements Serializable {
+@SuppressWarnings("unused") class SignatureStore implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	Random prior;
+	private Random prior;
 
-	String text;
+	private BidiMap<Signature, Character> u; // Universe
+	private BidiMap<Signature, Pair> p; // Pairs
+	private BidiMap<Signature, Power> r; // Power
 
-	BidiMap<Signature, Character> u; // Universe
-	BidiMap<Signature, Pair> p; // Pairs
-	BidiMap<Signature, Power> r; // Power
-
-	Map<Signature, Float> signatures;
+	private Map<Signature, Float> signatures;
 	
-	SequenceStore sequenceStore;
+	private SequenceStore sequenceStore;
 
-	int max_sig;
+	private int max_sig;
 
 	public SignatureStore() {
 		prior = new Random();
@@ -46,14 +43,8 @@ public class SignatureStore implements Serializable {
 		
 		max_sig = 0;
 	}
-
-	public int createSig(String text) {
-		//System.out.println("Creating sig: " + text);
-		List<Element> list = group(text);
-		return sig(list).getSig();
-	}
 	
-	public SequenceNode viewTree(Signature s) {
+	private SequenceNode viewTree(Signature s) {
 		SequenceNode node = null;
 		if(u.containsKey(s)) {
 			node = new SequenceNode(null, null, s, 0, 0);
@@ -68,7 +59,7 @@ public class SignatureStore implements Serializable {
 	}
 	
 	
-	public List<SequenceNode> storeSequence(String text) {
+	List<SequenceNode> storeSequence(String text) {
 		List<SequenceNode> sequence = new ArrayList<SequenceNode>();
 		sequence.add(sequenceStore.sequenceToTree(group(text)));
 		//System.out.println(sequence.size());
@@ -91,7 +82,7 @@ public class SignatureStore implements Serializable {
 		return sequence;
 	}
 	
-	public List<SequenceNode> concatenate(List<SequenceNode> a, List<SequenceNode> b) {
+	List<SequenceNode> concatenate(List<SequenceNode> a, List<SequenceNode> b) {
 		List<Element> groups = fixGroups(ListUtils.union(sequenceStore.treeToSequence(a.get(0)),
 				sequenceStore.treeToSequence(b.get(0))));
 		List<Element> elpowgroups = elpow(groups);
@@ -136,7 +127,7 @@ public class SignatureStore implements Serializable {
 //		return sequence;
 //	}
 
-	public List<Element> group(String text) {
+	private List<Element> group(String text) {
 		List<Element> list = new ArrayList<>();
 		char current = text.charAt(0);
 		int count = 1;
@@ -153,7 +144,7 @@ public class SignatureStore implements Serializable {
 		return list;
 	}
 	
-	public List<Element> fixGroups(List<Element> list) {
+	private List<Element> fixGroups(List<Element> list) {
 		List<Element> newList = list;
 		//System.out.println("pld list");
 		for(Element e : newList) {
@@ -172,7 +163,7 @@ public class SignatureStore implements Serializable {
 		return newList;
 	}
 
-	public List<Element> elpow(List<Element> list) {
+	private List<Element> elpow(List<Element> list) {
 		List<Element> result = new ArrayList<Element>();
 		for (Element p : list) {
 			result.add(sig(Collections.singletonList(p)));
@@ -190,7 +181,7 @@ public class SignatureStore implements Serializable {
 //		// TODO
 //	}
 
-	public Signature getSigU(char c) {
+	private Signature getSigU(char c) {
 		if (u.inverseBidiMap().containsKey(c)) {
 			return u.inverseBidiMap().get(c);
 		}
@@ -206,7 +197,7 @@ public class SignatureStore implements Serializable {
 		return signature;
 	}
 
-	public Signature getSigR(Power power) {
+	private Signature getSigR(Power power) {
 		if (r.inverseBidiMap().containsKey(power)) {
 			return r.inverseBidiMap().get(power);
 		}
@@ -221,7 +212,7 @@ public class SignatureStore implements Serializable {
 		return signature;
 	}
 
-	public Signature getSigP(Pair pair) {
+	private Signature getSigP(Pair pair) {
 		if (p.inverseBidiMap().containsKey(pair)) {
 			return p.inverseBidiMap().get(pair);
 		}
@@ -237,7 +228,7 @@ public class SignatureStore implements Serializable {
 		return signature;
 	}
 
-	public Signature sig(List<Element> list) {
+	private Signature sig(List<Element> list) {
 		if (list.size() == 1 & list.get(0).getPow() == 1) {
 			return Sig(list);
 		} else if (list.size() == 1 && list.get(0).getPow() > 1) {

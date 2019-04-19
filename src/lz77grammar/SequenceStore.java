@@ -3,22 +3,22 @@ package lz77grammar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SequenceStore {
-	List<List<SequenceNode>> sequences;
+class SequenceStore {
+	private List<List<SequenceNode>> sequences;
 
 	public SequenceStore() {
 		super();
 		this.sequences = new ArrayList<List<SequenceNode>>();
 	}
 
-	public SequenceNode sequenceToTree(List<Element> list) {
+	SequenceNode sequenceToTree(List<Element> list) {
 		if (list.size() == 0) {
 			return null;
 		}
 		return sequenceToTree(list, 0, list.size() - 1);
 	}
 
-	public List<Element> treeToSequence(SequenceNode node) {
+	List<Element> treeToSequence(SequenceNode node) {
 		List<Element> result = new ArrayList<>();
 		if (node.getLeft() != null) {
 			result.addAll(treeToSequence(node.getLeft()));
@@ -39,7 +39,7 @@ public class SequenceStore {
 				elements.get(mid), mid, end-start);
 	}
 	
-	public void addSequence(List<SequenceNode> list) {
+	void addSequence(List<SequenceNode> list) {
 		sequences.add(list);
 	}
 

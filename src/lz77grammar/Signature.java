@@ -2,11 +2,11 @@ package lz77grammar;
 
 import java.util.Objects;
 
-public class Signature implements Element {
+class Signature implements Element {
 
 	private int signature;
 	
-	public Signature(int signature) {
+	Signature(int signature) {
 		this.signature = signature;
 	}
 	

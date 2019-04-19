@@ -3,7 +3,7 @@ package lz77grammar;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Terminal implements Node, Cloneable {
+class Terminal implements Node, Cloneable {
 
 	private char character;
 	private String name;
@@ -83,7 +83,7 @@ public class Terminal implements Node, Cloneable {
 		return 0;
 	}
 
-	public Terminal(String name, char character) {
+	Terminal(String name, char character) {
 		super();
 		this.name = name;
 		this.character = character;

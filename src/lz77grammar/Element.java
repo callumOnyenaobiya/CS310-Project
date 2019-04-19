@@ -1,6 +1,6 @@
 package lz77grammar;
 
-public interface Element {
+interface Element {
 	public char getChar();
 	public int getPow();
 	public int getSig();

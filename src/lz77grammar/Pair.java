@@ -2,11 +2,11 @@ package lz77grammar;
 
 import java.util.Objects;
 
-public class Pair {
+class Pair {
 	private Signature l;
 	private Signature r;
 
-	public Pair(Signature l, Signature r) {
+	Pair(Signature l, Signature r) {
 		this.l = l;
 		this.r = r;
 	}

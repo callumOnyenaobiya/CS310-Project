@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-public class Converter {
-	TreePrinter treeprinter;
+class Converter {
+	private TreePrinter treeprinter;
 	private Map<String, Node> nodes;
-	int index;
-	int tutorialMode;
+	private int index;
+	private int tutorialMode;
 	
-	public Converter(int tutorialMode) {
+	Converter(int tutorialMode) {
 		this.tutorialMode = tutorialMode;
 		this.index = 0;
 		nodes = new HashMap<String, Node>();
@@ -27,11 +27,11 @@ public class Converter {
 		return nodes;
 	}
 	
-	public void addNode(String string, Node node) {
+	private void addNode(String string, Node node) {
 		nodes.put(string, node);
 	}
 
-	public CnfGrammar constructGrammar(String[] factors) {
+	CnfGrammar constructGrammar(String[] factors) {
 		Node node = create(factors[0]);
 		for (int i = 1; i < factors.length; i++) {
 			node = concatenate(node, create(factors[i]));
@@ -66,7 +66,7 @@ public class Converter {
 //		return 0;
 //	}
 	
-	public Node concatenate(Node a, Node b) {
+	private Node concatenate(Node a, Node b) {
 		Node newNode = null;
 		if(Math.abs(a.getHeight() - b.getHeight()) <= 1) {
 			newNode = new Branch("X" + index++, a, b);
@@ -84,7 +84,7 @@ public class Converter {
 		return newNode;
 	}
 	
-	public Node leftConcatenate(Node a, Node b) {
+	private Node leftConcatenate(Node a, Node b) {
 		Node current = b;
 		Node newNode = null;
 		while(current.getLeft().getHeight() - a.getHeight() > 1) {
@@ -116,7 +116,7 @@ public class Converter {
 		return b;
 	}
 	
-	public Node rightConcatenate(Node a, Node b) {
+	private Node rightConcatenate(Node a, Node b) {
 		Node current = a;
 		Node newNode = null;
 		while(current.getRight().getHeight() - b.getHeight() > 1) {
@@ -149,7 +149,7 @@ public class Converter {
 		return a;
 	}
 
-	public Node leftBalance(Node node) {
+	private Node leftBalance(Node node) {
 		if(node.getLeft().getHeight() == node.getRight().getHeight() + 2) {
 			tutorialMode("Left balance required");
 			if(node.getLeft().getLeft().getHeight() > node.getLeft().getRight().getHeight()) {
@@ -162,13 +162,13 @@ public class Converter {
 		return node;
 	}
 	
-	public Node leftRotation1(Node node) {
+	private Node leftRotation1(Node node) {
 		Node newNodeRight = new Branch("X" + index++, node.getLeft().getRight().clone(),  node.getRight().clone());
 		addNode(newNodeRight.evaluate(), newNodeRight);
 		return new Branch("X" + index++, node.getLeft().getLeft().clone(), newNodeRight);
 	}
 	
-	public Node leftRotation2(Node node) {
+	private Node leftRotation2(Node node) {
 		Node newNodeRight = new Branch("X" + index++, node.getLeft().getRight().getRight().clone(),  node.getRight().clone());
 		addNode(newNodeRight.evaluate(), newNodeRight);
 		Node newNodeLeft = new Branch("X" + index++, node.getLeft().getLeft().clone(), node.getLeft().getRight().getLeft().clone());
@@ -176,7 +176,7 @@ public class Converter {
 		return new Branch("X" + index++, newNodeLeft, newNodeRight);
 	}
 	
-	public Node rightBalance(Node node) {
+	private Node rightBalance(Node node) {
 		if(node.getRight().getHeight() == node.getLeft().getHeight() + 2) {
 			tutorialMode("Right balance required");
 			if(node.getRight().getRight().getHeight() > node.getRight().getLeft().getHeight()) {
@@ -189,13 +189,13 @@ public class Converter {
 		return node;
 	}
 	
-	public Node rightRotation1(Node node) {
+	private Node rightRotation1(Node node) {
 		Node newNodeLeft = new Branch("X" + index++, node.getLeft().clone(), node.getRight().getLeft().clone());
 		addNode(newNodeLeft.evaluate(), newNodeLeft);
 		return new Branch("X" + index++, newNodeLeft, node.getRight().getRight().clone());
 	}
 	
-	public Node rightRotation2(Node node) {
+	private Node rightRotation2(Node node) {
 		Node newNodeLeft = new Branch("X" + index++, node.getLeft().clone(), node.getRight().getLeft().getLeft().clone());
 		addNode(newNodeLeft.evaluate(), newNodeLeft);
 		Node newNodeRight = new Branch("X" + index++, node.getRight().getLeft().getRight().clone(), node.getRight().getRight().clone());
@@ -203,7 +203,7 @@ public class Converter {
 		return new Branch("X" + index++, newNodeLeft, newNodeRight);
 	}
 	
-	public Node create(String word) {
+	private Node create(String word) {
 		Node node = null;
 		if(nodes.containsKey(word)) {
 			tutorialMode(word + " found");
@@ -229,7 +229,7 @@ public class Converter {
 		return node;
 	}
 	
-	public boolean hasNodes(List<String> list, Map<String, Node> nodes) {
+	private boolean hasNodes(List<String> list, Map<String, Node> nodes) {
 		for(String s : list) {
 			if(!nodes.containsKey(s)) {
 				return false;
@@ -238,7 +238,7 @@ public class Converter {
 		return true;
 	}
 	
-	public List<List<String>> decompose(String str) {
+	private List<List<String>> decompose(String str) {
 	    List<List<String>> result = new ArrayList<>();
 
 	    if (str.length() == 1) {
@@ -258,13 +258,13 @@ public class Converter {
 		return result;
 	}
 	
-	public void tutorialMode(String string) {
+	private void tutorialMode(String string) {
 		if(tutorialMode == 1) {
 			System.out.println(string);
 		}
 	}
 	
-	public void tutorialTree(Node node) {
+	private void tutorialTree(Node node) {
 		if(tutorialMode == 1) {
 			treeprinter.print(node);
 		}

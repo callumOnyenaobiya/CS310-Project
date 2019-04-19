@@ -3,7 +3,7 @@ package lz77grammar;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Branch implements Node, Cloneable {
+class Branch implements Node, Cloneable {
 
 	private Node left;
 	private Node right;
@@ -79,7 +79,7 @@ public class Branch implements Node, Cloneable {
 		return left.evaluate() + right.evaluate();
 	}
 
-	public Branch(String name, Node left, Node right) {
+	Branch(String name, Node left, Node right) {
 		super();
 		this.name = name;
 		this.left = left;

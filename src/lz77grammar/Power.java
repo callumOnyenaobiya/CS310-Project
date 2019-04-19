@@ -2,13 +2,13 @@ package lz77grammar;
 
 import java.util.Objects;
 
-public class Power implements Element {
+class Power implements Element {
 
 	private int power;
 	private char character;
 	private int signature;
 
-	public Power(int power, char character) {
+	Power(int power, char character) {
 		this.power = power;
 		this.character = character;
 	}

@@ -3,14 +3,14 @@ package lz77grammar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TreePrinter {
+class TreePrinter {
 
 	/**
 	 * Print a tree
 	 * 
 	 * @param root tree root TreePrinterNode
 	 */
-	public void print(TreePrinterNode root) {
+	void print(TreePrinterNode root) {
 		
 		List<List<String>> lines = new ArrayList<List<String>>();
 		List<TreePrinterNode> level = new ArrayList<TreePrinterNode>();

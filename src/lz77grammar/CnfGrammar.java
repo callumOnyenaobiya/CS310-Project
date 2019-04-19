@@ -5,13 +5,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-public class CnfGrammar {
+class CnfGrammar {
 
 	private Node startNode;
 	private List<String> gFactors;
 	private TreePrinter treeprinter;
 
-	public CnfGrammar(Node startNode) {
+	CnfGrammar(Node startNode) {
 		this.startNode = startNode;
 		gFactors = new LinkedList<String>();
 		gFactors(startNode, new HashSet<String>());
@@ -22,7 +22,7 @@ public class CnfGrammar {
 		return startNode;
 	}
 	
-	public String evaluate() {
+	String evaluate() {
 		return this.startNode.evaluate();
 	}
 
@@ -30,24 +30,20 @@ public class CnfGrammar {
 		this.startNode = startNode;
 	}
 	
-	public Boolean isBalanced() {
+	Boolean isBalanced() {
 		return this.startNode.getBalance() == 0 || this.startNode.getBalance() == 1;
 	}
 
-	public List<String> getgFactors() {
+	List<String> getgFactors() {
 		return gFactors;
 	}
 
-	public void setgFactors(List<String> gFactors) {
-		this.gFactors = gFactors;
-	}
-
-	public void loadGfactors() {
+	void loadGfactors() {
 		gFactors = new LinkedList<String>();
 		gFactors(startNode, new HashSet<String>());
 	}
 
-	public Set<String> gFactors(Node root, Set<String> map) {
+	private Set<String> gFactors(Node root, Set<String> map) {
 		if (root instanceof Terminal) {
 			gFactors.add(root.evaluate());
 			map.add(root.evaluate());
@@ -65,7 +61,7 @@ public class CnfGrammar {
 		return map;
 	}
 
-	public void balanceGrammar(int tutorialMode) {
+	void balanceGrammar(int tutorialMode) {
 		loadGfactors();
 		Converter converter = new Converter(tutorialMode);
 		startNode = converter.constructGrammar(gFactors.toArray(new String[0])).startNode;
@@ -75,7 +71,7 @@ public class CnfGrammar {
 		return startNode.getProductions(new HashSet<String>());
 	}
 
-	public void printTree() {
+	void printTree() {
 		treeprinter.print(startNode);
 	}
 

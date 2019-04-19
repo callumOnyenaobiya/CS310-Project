@@ -2,7 +2,7 @@ package lz77grammar;
 
 import java.io.Serializable;
 
-public class Reference implements Serializable {
+class Reference implements Serializable {
 	/**
 	 * 
 	 */

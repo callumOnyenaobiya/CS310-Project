@@ -8,12 +8,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-@SuppressWarnings("unchecked")
-public class CFG {
+@SuppressWarnings("unchecked") class CFG {
 
 	HashMap<String, NonTerminal> map;
 
-	public CFG(String file) {
+	CFG(String file) {
 		BufferedReader b;
 		map = new HashMap<String, NonTerminal>();
 
@@ -39,11 +38,11 @@ public class CFG {
 		}
 	}
 	
-	public CnfGrammar toCnfGrammar() {
+	CnfGrammar toCnfGrammar() {
 		return new CnfGrammar(toCnfGrammar(map.get("S")));
 	}
 	
-	public Node toCnfGrammar(NonTerminal nonTerminal) {
+	private Node toCnfGrammar(NonTerminal nonTerminal) {
 		if (!isCNF()) {
 			System.out.println("CNF only");
 			return null;
@@ -91,10 +90,6 @@ public class CFG {
 		return isCyclic(map.get("S"), new HashSet<String>());
 	}
 
-	public boolean isCyclic(String nonTerminal) {
-		return isCyclic(map.get(nonTerminal), new HashSet<String>());
-	}
-
 	private boolean isCyclic(NonTerminal node, HashSet<String> set) {
 		set.add(node.getName());
 
@@ -125,7 +120,7 @@ public class CFG {
 		return map.get("S").evaluate();
 	}
 
-	class NonTerminal {
+	private class NonTerminal {
 		private String name;
 		private String right;
 
@@ -159,7 +154,7 @@ public class CFG {
 			return right;
 		}
 
-		public NonTerminal(String left, String right) {
+		private NonTerminal(String left, String right) {
 			this.name = processLeft(left);
 			this.right = right.replaceAll("\\s+", "");
 		}

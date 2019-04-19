@@ -2,14 +2,13 @@ package lz77grammar;
 
 import java.util.ArrayList;
 
-@SuppressWarnings("unused")
-public class LZ77 {
+@SuppressWarnings("unused") class LZ77 {
 
 	private int searchWindowLen;
 	private int lookAheadWindowLen;
 
 	
-	public LZ77(int searchWindowLen, int lookAheadWindowLen) {
+	LZ77(int searchWindowLen, int lookAheadWindowLen) {
 		this.searchWindowLen = searchWindowLen;
 		this.lookAheadWindowLen = lookAheadWindowLen;
 	}
@@ -35,7 +34,7 @@ public class LZ77 {
 	}
 
 
-	public ArrayList<Reference> compress(String rawData) {
+	ArrayList<Reference> compress(String rawData) {
 		Reference thisReference;
 		String searchSubstring;
 		int matchLen;
@@ -183,34 +182,21 @@ public class LZ77 {
 		return result;
 	}
 
-	String toBitStream(ArrayList<Reference> References) {
-		StringBuffer bitStream = new StringBuffer();
-		for (Reference Reference : References) {
-			bitStream.append(offsetToBinary(Reference.offset));
-			bitStream.append(stringLenToBinary(Reference.stringLen));
-			bitStream.append(nextCharToBinary(Reference.nextChar));
-		}
-		System.out.println("Number of References: " + References.size());
-		String result = new String(bitStream);
-		System.out.println("Length of bitstream: " + result.length());
-		return result;
-	}
-
-	String offsetToBinary(int offset) {
+	private String offsetToBinary(int offset) {
 		return String.format("%" + Integer.toBinaryString(this.searchWindowLen).length() + "s",
 				Integer.toBinaryString(offset)).replace(' ', '0');
 	}
 
-	String stringLenToBinary(int stringLen) {
+	private String stringLenToBinary(int stringLen) {
 		return String.format("%" + Integer.toBinaryString(this.lookAheadWindowLen).length() + "s",
 				Integer.toBinaryString(stringLen)).replace(' ', '0');
 	}
 
-	String nextCharToBinary(String nextChar) {
+	private String nextCharToBinary(String nextChar) {
 		return String.format("%8s", Integer.toBinaryString((int) nextChar.charAt(0))).replace(' ', '0');
 	}
 
-	void bitStreamToString(String bitStream) {
+	/*void bitStreamToString(String bitStream) {
 		ArrayList<Reference> output = new ArrayList<Reference>();
 		int headPos = 0;
 		int offset;
@@ -233,4 +219,17 @@ public class LZ77 {
 	static int getBitsRequired(int value) {
 		return Integer.SIZE - Integer.numberOfLeadingZeros(value);
 	}
+	
+	String toBitStream(ArrayList<Reference> References) {
+		StringBuffer bitStream = new StringBuffer();
+		for (Reference Reference : References) {
+			bitStream.append(offsetToBinary(Reference.offset));
+			bitStream.append(stringLenToBinary(Reference.stringLen));
+			bitStream.append(nextCharToBinary(Reference.nextChar));
+		}
+		System.out.println("Number of References: " + References.size());
+		String result = new String(bitStream);
+		System.out.println("Length of bitstream: " + result.length());
+		return result;
+	}*/
 }

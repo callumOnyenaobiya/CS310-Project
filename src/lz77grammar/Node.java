@@ -3,7 +3,7 @@ package lz77grammar;
 import java.util.HashSet;
 import java.util.Set;
 
-public interface Node extends TreePrinterNode {
+interface Node extends TreePrinterNode {
 	public String evaluate();
 	public String getName();
 	public int size();
