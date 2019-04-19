@@ -14,6 +14,7 @@ public class Branch implements Node, Cloneable {
 		return name;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -94,18 +95,22 @@ public class Branch implements Node, Cloneable {
 		return 1 + Math.max(left.getHeight(), right.getHeight());
 	}
 
+	@Override
 	public Node getLeft() {
 		return left;
 	}
 
+	@Override
 	public void setLeft(Node left) {
 		this.left = left;
 	}
 
+	@Override
 	public Node getRight() {
 		return right;
 	}
 
+	@Override
 	public void setRight(Node right) {
 		this.right = right;
 	}

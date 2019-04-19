@@ -37,6 +37,7 @@ public class Terminal implements Node, Cloneable {
 		return name;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}

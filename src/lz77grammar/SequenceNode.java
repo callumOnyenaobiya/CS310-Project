@@ -15,10 +15,12 @@ public class SequenceNode implements TreePrinterNode {
 		this.size = size;
 	}
 
+	@Override
 	public SequenceNode getLeft() {
 		return left;
 	}
 
+	@Override
 	public SequenceNode getRight() {
 		return right;
 	}

@@ -25,6 +25,7 @@ public class Power implements Element {
 		return power;
 	}
 
+	@Override
 	public void setPow(int power) {
 		this.power = power;
 	}

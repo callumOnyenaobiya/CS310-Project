@@ -11,7 +11,9 @@ public interface Node extends TreePrinterNode {
 	public void setName(String name);
 	public int getHeight();
 	public int getBalance();
+	@Override
 	public Node getLeft();
+	@Override
 	public Node getRight();
 	public void setRight(Node right);
 	public void setLeft(Node left);
