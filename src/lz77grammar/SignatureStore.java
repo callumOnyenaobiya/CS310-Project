@@ -1,5 +1,6 @@
 package lz77grammar;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,7 +14,7 @@ import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
-public class SignatureStore {
+public class SignatureStore implements Serializable {
 
 	Random prior;
 

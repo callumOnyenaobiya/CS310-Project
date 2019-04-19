@@ -53,22 +53,27 @@ public class Main {
 	}
 
 	public static void mainMenu() {
-		String option = "NA";
+		String option;
 		do {
 			System.out.println("Please select an option");
 			System.out.println("");
-			System.out.println("L - LZ77 operations");
-			System.out.println("G - Grammar operations");
-			System.out.println("D - View curent directory");
+			System.out.println("l - LZ77 operations");
+			System.out.println("g - Grammar operations");
+			System.out.println("s - Compressed signature data structure operations");
+			System.out.println("d - View current directory");
+			System.out.println("q - quit");
 			option = input.nextLine();
 			switch (option) {
-			case ("L"):
+			case ("l"):
 				lz77Menu();
 				break;
-			case ("G"):
+			case ("g"):
 				grammarMenu();
 				break;
-			case ("D"):
+			case("s"):
+				signatureMenu();
+				break;
+			case ("d"):
 				getAllFiles();
 				break;
 			}
@@ -80,14 +85,42 @@ public class Main {
 		if(cnfGrammar == null) {
 			return;
 		}
+		System.out.println("Grammar successfully parsed.");
+		String option;
+		do {
+			System.out.println("Select an option: ");
+			System.out.println("t - view parse tree");
+			System.out.println("b - balance grammar");
+			System.out.println("g - compute gFactors");
+			System.out.println("q - back");
+			option = input.nextLine();
+			switch(option) {
+			case("t"):
+				viewParseTree(cnfGrammar);
+				break;
+			case("b"):
+				cnfGrammar = balanceGrammar(cnfGrammar);
+				break;
+			case("g"):
+				grammarFactors(cnfGrammar);
+				break;
+			}
+		} while(!option.equals("q"));
+
+	}
+	
+	public static void viewParseTree(CnfGrammar cnfGrammar) {
 		cnfGrammar.printTree();
-		System.out.println("Grammar successfully parsed, select an option: ");
 	}
 
 	public static CnfGrammar parseGrammar() {
 		System.out.println("Enter grammar file to parse: ");
 		String file = input.nextLine();
 		CFG cfg = new CFG(file);
+		if(cfg.map.size() == 0) {
+			System.out.println("Empty grammar received");
+			return null;
+		}
 		if(cfg.isCyclic()) {
 			System.out.println("Grammar not an SLP, please enter an SLP.");
 			return null;
@@ -100,21 +133,31 @@ public class Main {
 		return cfg.toCnfGrammar();
 	}
 
-	public static void balanceGrammar() {
+	public static CnfGrammar balanceGrammar(CnfGrammar cnfGrammar) {
+		System.out.println("Enter output file name: ");
+		String fileOut = input.nextLine();
+		cnfGrammar.balanceGrammar(0);
+		productionsToFile(cnfGrammar, fileOut);
+		return cnfGrammar;
 
 	}
 
-	public static void grammarFactors() {
-
+	public static void grammarFactors(CnfGrammar cnfGrammar) {
+		cnfGrammar.loadGfactors();
+		System.out.println("Grammar factors of "+cnfGrammar.evaluate()+":");
+		for(String s : cnfGrammar.getgFactors()) {
+			System.out.println(s);
+		}
 	}
 
 	public static void lz77Menu() {
-		String option = "NA";
+		String option;
 		do {
 			System.out.println("Select an option: ");
 			System.out.println("c - compress a file");
 			System.out.println("d - decompress a file");
 			System.out.println("s - convert LZ77 file to SLP");
+			System.out.println("q - back");
 			option = input.nextLine();
 			switch (option) {
 			case ("c"):
@@ -209,39 +252,178 @@ public class Main {
 		
 		CnfGrammar cnfgrammar = converter.constructGrammar(lz77Compressor.getTuples(encodedData));
 		cnfgrammar.printTree();
-		try (PrintWriter out = new PrintWriter(fileOut)) {
-			String[] productions = cnfgrammar.getProductions().toArray(new String[0]);
+		productionsToFile(cnfgrammar, fileOut);
+	}
+	
+	public static void productionsToFile(CnfGrammar cnfGrammar, String file) {
+		try (PrintWriter out = new PrintWriter(file)) {
+			String[] productions = cnfGrammar.getProductions().toArray(new String[0]);
 			for(int i = 0; i < productions.length - 1; i++) {
 				out.println(productions[i]);
 			}
 			out.print(productions[productions.length-1]);
-			System.out.println("LZ77 file converted successfully");
+			System.out.println("Grammar outputted to " + file + "successfully.");
 		} catch(FileNotFoundException ex) {
 			System.out.println("Unable to output grammar to file");
 		}
-
-		
 	}
+	
+	public static void signatureMenu() {
+		String option;
+		SignatureStore sigStore;
+		do {
+			System.out.println("Select an option: ");
+			System.out.println("l - Load existing data structure");
+			System.out.println("n - Create new data structure");
+			System.out.println("s - save current signature store");
+			System.out.println("o - run operations");
+			option = input.nextLine();
+			switch (option) {
+			case ("l"):
+				sigStore = loadSigStore();
+				if(sigStore == null) {
+					System.out.println("Could not load store.");
+					return;
+				} 
+				signatureStore = sigStore;
+				System.out.println("Signature loaded successfully.");
+				break;
+			case ("n"):
+				sigStore = newSigStore();
+				if(sigStore == null) {
+					System.out.println("Could not load store.");
+					return;
+				} 
+				signatureStore = sigStore;
+				System.out.println("Signature loaded successfully.");
+				break;
+			case ("o"):
+				sigOperations();
+				break;
+			}
+		} while (!option.equals("q"));		
+	}
+	
+	public static SignatureStore loadSigStore() {
+		System.out.println("Signature store file to load: ");
+		String file = input.nextLine();
+		
+		SignatureStore loadedSignatureStore;
+		try {
+			FileInputStream fileIn = new FileInputStream(file);
+			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
 
-	public static void createSignature(String file) throws Exception {
-		List<SequenceNode> a = signatureStore.storeSequence("test");
-		List<SequenceNode> b = signatureStore.storeSequence("ing");
-		List<SequenceNode> c = signatureStore.storeSequence("testi");
-		List<SequenceNode> d = signatureStore.storeSequence("ng");
+			Object obj = objectIn.readObject();
+			objectIn.close();
+			loadedSignatureStore = (SignatureStore) obj;
 
-		System.out.println("test = " + a.get(a.size() - 1).element.getSig());
-		System.out.println("ing = " + b.get(b.size() - 1).element.getSig());
-		System.out.println("testi = " + c.get(d.size() - 1).element.getSig());
-		System.out.println("ng = " + d.get(d.size() - 1).element.getSig());
-//		System.out.println("testi = " + c.get(d.size() - 1).element.getSig());
-//		System.out.println("ng = " + d.get(d.size() - 1).element.getSig());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+		return loadedSignatureStore;
+	}
+	
+	public static SignatureStore newSigStore() {
+		SignatureStore signatureStore = new SignatureStore();
+		return signatureStore;
+	}
+	
+	public static void saveSigStore() {
+		System.out.println("File name: ");
+		String file = input.nextLine();
+		
+		try {
+			FileOutputStream fileOut = new FileOutputStream(file);
+			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+			objectOut.writeObject(signatureStore);
+			objectOut.close();
+			System.out.println("Signature store successfully saved as " + file);
 
+		} catch (Exception ex) {
+			System.out.println("Unable to output to file.");
+		}
+	}
+	
+	public static void sigOperations() {
+		String option;
+		do {
+			System.out.println("Select an option: ");
+			System.out.println("c - create new signature");
+			System.out.println("j - join/concatenate two sequences");
+			System.out.println("s - split a sequence");
+			System.out.println("comp - compare two sequences by their signature");
+			option = input.nextLine();
+			switch (option) {
+			case ("c"):
+				createSig();
+				break;
+			case ("j"):
+				concatenateSigs();
+				break;
+			case ("s"):
+				splitSig();
+				break;
+			case ("comp"):
+				compareSigs();
+				break;
+			}
+		} while (!option.equals("q"));		
+	}
+	
+	public static void createSig() {
+		System.out.println("Enter string to convert to signature: ");
+		String string = input.nextLine();
+		List<SequenceNode> output = signatureStore.storeSequence(string);
+		System.out.println("Signature for " + string + " successfully created as: " + output.get(output.size() - 1).element.getSig());
+	}
+	
+	public static void concatenateSigs() {
+		System.out.println("Enter first string to concatenate: ");
+		String first = input.nextLine();
+		System.out.println("Enter second string to concatenate: ");
+		String second = input.nextLine();
+		
+		List<SequenceNode> a = signatureStore.storeSequence(first);
+		System.out.println("Signature for " + first + " successfully created as: " + a.get(a.size() - 1).element.getSig());
+		List<SequenceNode> b = signatureStore.storeSequence(second);
+		System.out.println("Signature for " + second + " successfully created as: " + b.get(b.size() - 1).element.getSig());
+		
+		System.out.println("Concatenating " +first+" and " + second +" gives "+ first+second);
 		List<SequenceNode> ab = signatureStore.concatenate(a, b);
-		List<SequenceNode> cd = signatureStore.concatenate(c, d);
-
-		System.out.println("ABtesting = " + ab.get(ab.size() - 1).element.getSig());
-		System.out.println("CDtesting = " + cd.get(cd.size() - 1).element.getSig());
-		System.out.println("testing = " + signatureStore.createSig("testing"));
+		System.out.println("Signature for " + first+second + " successfully created as: " + ab.get(ab.size() - 1).element.getSig());
+	}
+	
+	public static void splitSig() {
+		System.out.println("Enter string to split: ");
+		String string = input.nextLine();
+		System.out.println("Enter position to split " + string +" at:");
+		int position = intInput.nextInt();
+		
+		String first = string.substring(0, position);
+		String second = string.substring(position, string.length());
+		
+		System.out.println("Splitting "+string+" into: "+first+" and "+second);
+		List<SequenceNode> a = signatureStore.storeSequence(first);
+		System.out.println("Signature for " + first + " successfully created as: " + a.get(a.size() - 1).element.getSig());
+		List<SequenceNode> b = signatureStore.storeSequence(second);
+		System.out.println("Signature for " + second + " successfully created as: " + b.get(b.size() - 1).element.getSig());
+	}
+	
+	public static void compareSigs() {
+		System.out.println("Enter first string to compare: ");
+		String first = input.nextLine();
+		System.out.println("Enter second string to compare: ");
+		String second = input.nextLine();
+		
+		List<SequenceNode> a = signatureStore.storeSequence(first);
+		List<SequenceNode> b = signatureStore.storeSequence(second);
+		
+		if(a.get(a.size() - 1).element.getSig() == b.get(b.size() - 1).element.getSig()) {
+			System.out.println(a.get(a.size() - 1).element.getSig()+" = "+b.get(b.size() - 1).element.getSig()+". Therefore same sequence.");
+		} else {
+			System.out.println(a.get(a.size() - 1).element.getSig()+" != "+b.get(b.size() - 1).element.getSig()+". Therefore sequences differ.");
+		}
 	}
 
 	public static void gFactors(String file) throws Exception {
@@ -250,9 +432,9 @@ public class Main {
 		ArrayList<Reference> list = lz77.compress(file);
 		String[] result = lz77.getTuples(list);
 		cnf = converter.constructGrammar(result);
-		treeprinter.print(cnf.startNode);
+		treeprinter.print(cnf.getStartNode());
 		System.out.println("our gfactors:");
-		for (String s : cnf.gFactors) {
+		for (String s : cnf.getgFactors()) {
 			System.out.println(s);
 		}
 	}

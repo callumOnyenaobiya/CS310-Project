@@ -37,7 +37,9 @@ public class Converter {
 		for (int i = 1; i < factors.length; i++) {
 			node = concatenate(node, create(factors[i]));
 		}
-		return new CnfGrammar(node);
+		CnfGrammar cnfGrammar = new CnfGrammar(node);
+		cnfGrammar.getStartNode().setName("S");
+		return cnfGrammar;
 	}
 	
 //	public Map<String, Integer> gFactors(Node root, Map<String, Integer> map){

@@ -33,8 +33,9 @@ public class CFG {
 				map.put(nonTerminal.getName(), nonTerminal);
 			}
 
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("Unable to parse grammar");
+			map = new HashMap<String, NonTerminal>();
 		}
 	}
 	

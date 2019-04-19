@@ -8,15 +8,35 @@ import java.util.Set;
 
 public class CnfGrammar {
 
-	Node startNode;
-	List<String> gFactors;
-	TreePrinter treeprinter;
+	private Node startNode;
+	private List<String> gFactors;
+	private TreePrinter treeprinter;
 
 	public CnfGrammar(Node startNode) {
 		this.startNode = startNode;
 		gFactors = new LinkedList<String>();
 		gFactors(startNode, new HashSet<String>());
 		this.treeprinter = new TreePrinter();
+	}
+
+	public Node getStartNode() {
+		return startNode;
+	}
+	
+	public String evaluate() {
+		return this.startNode.evaluate();
+	}
+
+	public void setStartNode(Node startNode) {
+		this.startNode = startNode;
+	}
+
+	public List<String> getgFactors() {
+		return gFactors;
+	}
+
+	public void setgFactors(List<String> gFactors) {
+		this.gFactors = gFactors;
 	}
 
 	public void loadGfactors() {
@@ -47,7 +67,7 @@ public class CnfGrammar {
 		Converter converter = new Converter(tutorialMode);
 		startNode = converter.constructGrammar(gFactors.toArray(new String[0])).startNode;
 	}
-	
+
 	public Set<String> getProductions() {
 		return startNode.getProductions(new HashSet<String>());
 	}
