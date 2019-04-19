@@ -3,25 +3,25 @@ package lz77grammar;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class CFG {
 
 	HashMap<String, NonTerminal> map;
 
 	public CFG(String file) {
-
+		BufferedReader b;
 		map = new HashMap<String, NonTerminal>();
 
 		try {
 
 			File f = new File(file);
 
-			BufferedReader b = new BufferedReader(new FileReader(f));
+			b = new BufferedReader(new FileReader(f));
 
 			String readLine = "";
 
@@ -54,7 +54,6 @@ public class CFG {
 		char[] characters = nonTerminal.getRight().toCharArray();
 
 		boolean isNonTerminal = false;
-		String result = "";
 		String nonTerminalName = "";
 		for (char c : characters) {
 			if ((c == '(') && !isNonTerminal) {

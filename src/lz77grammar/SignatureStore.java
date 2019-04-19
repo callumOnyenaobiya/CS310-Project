@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -14,7 +12,13 @@ import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
+@SuppressWarnings("unused")
 public class SignatureStore implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	Random prior;
 

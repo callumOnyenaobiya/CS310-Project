@@ -3,6 +3,10 @@ package lz77grammar;
 import java.io.Serializable;
 
 public class Reference implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// offset points to the beginning of a match relative
 	// to the current location. Has a value of 0 if there
 	// is no match.
