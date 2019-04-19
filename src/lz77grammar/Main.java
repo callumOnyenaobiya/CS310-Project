@@ -11,15 +11,10 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 import java.util.Scanner;
-import java.util.Set;
 
+@SuppressWarnings("unchecked")
 public class Main {
 
 	static Converter converter;
@@ -31,6 +26,10 @@ public class Main {
 	static Scanner input;
 	static Scanner intInput;
 
+	/**
+	 * @param args
+	 * test
+	 */
 	public static void main(String[] args) {
 		input = new Scanner(System.in);
 		intInput = new Scanner(System.in);
@@ -44,14 +43,11 @@ public class Main {
 		lz77Compressor = new LZ77(32800, 250);
 
 		mainMenu();
-
-
-
-//        File curDir = new File(".");
-//        getAllFiles(curDir);
-
 	}
 
+	/**
+	 * 
+	 */
 	public static void mainMenu() {
 		String option;
 		do {
@@ -80,6 +76,9 @@ public class Main {
 		} while (!option.equals("q"));
 	}
 
+	/**
+	 * 
+	 */
 	public static void grammarMenu() {
 		CnfGrammar cnfGrammar = parseGrammar();
 		if(cnfGrammar == null) {
@@ -109,10 +108,16 @@ public class Main {
 
 	}
 	
+	/**
+	 * @param cnfGrammar
+	 */
 	public static void viewParseTree(CnfGrammar cnfGrammar) {
 		cnfGrammar.printTree();
 	}
 
+	/**
+	 * @return
+	 */
 	public static CnfGrammar parseGrammar() {
 		System.out.println("Enter grammar file to parse: ");
 		String file = input.nextLine();
@@ -133,6 +138,10 @@ public class Main {
 		return cfg.toCnfGrammar();
 	}
 
+	/**
+	 * @param cnfGrammar
+	 * @return
+	 */
 	public static CnfGrammar balanceGrammar(CnfGrammar cnfGrammar) {
 		System.out.println("Enter output file name: ");
 		String fileOut = input.nextLine();
@@ -142,6 +151,9 @@ public class Main {
 
 	}
 
+	/**
+	 * @param cnfGrammar
+	 */
 	public static void grammarFactors(CnfGrammar cnfGrammar) {
 		cnfGrammar.loadGfactors();
 		System.out.println("Grammar factors of "+cnfGrammar.evaluate()+":");
@@ -150,6 +162,9 @@ public class Main {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public static void lz77Menu() {
 		String option;
 		do {
@@ -173,6 +188,9 @@ public class Main {
 		} while (!option.equals("q"));
 	}
 
+	/**
+	 * 
+	 */
 	public static void lz77Compression() {
 		System.out.println("File to compress: ");
 		String file = input.nextLine();
@@ -205,6 +223,9 @@ public class Main {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public static void lz77Decompression() {
 		System.out.println("File to decompress: ");
 		String file = input.nextLine();
@@ -233,6 +254,9 @@ public class Main {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public static void lz77Slp() {
 		System.out.println("File to convert: ");
 		String file = input.nextLine();
@@ -258,6 +282,10 @@ public class Main {
 		productionsToFile(cnfgrammar, fileOut);
 	}
 	
+	/**
+	 * @param cnfGrammar
+	 * @param file
+	 */
 	public static void productionsToFile(CnfGrammar cnfGrammar, String file) {
 		try (PrintWriter out = new PrintWriter(file)) {
 			String[] productions = cnfGrammar.getProductions().toArray(new String[0]);
@@ -271,6 +299,9 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	public static void signatureMenu() {
 		String option;
 		SignatureStore sigStore;
@@ -307,6 +338,9 @@ public class Main {
 		} while (!option.equals("q"));		
 	}
 	
+	/**
+	 * @return
+	 */
 	public static SignatureStore loadSigStore() {
 		System.out.println("Signature store file to load: ");
 		String file = input.nextLine();
@@ -327,11 +361,17 @@ public class Main {
 		return loadedSignatureStore;
 	}
 	
+	/**
+	 * @return
+	 */
 	public static SignatureStore newSigStore() {
 		SignatureStore signatureStore = new SignatureStore();
 		return signatureStore;
 	}
 	
+	/**
+	 * 
+	 */
 	public static void saveSigStore() {
 		System.out.println("File name: ");
 		String file = input.nextLine();
@@ -348,6 +388,9 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	public static void sigOperations() {
 		String option;
 		do {
@@ -374,6 +417,9 @@ public class Main {
 		} while (!option.equals("q"));		
 	}
 	
+	/**
+	 * 
+	 */
 	public static void createSig() {
 		System.out.println("Enter string to convert to signature: ");
 		String string = input.nextLine();
@@ -381,6 +427,9 @@ public class Main {
 		System.out.println("Signature for " + string + " successfully created as: " + output.get(output.size() - 1).element.getSig());
 	}
 	
+	/**
+	 * 
+	 */
 	public static void concatenateSigs() {
 		System.out.println("Enter first string to concatenate: ");
 		String first = input.nextLine();
@@ -397,6 +446,9 @@ public class Main {
 		System.out.println("Signature for " + first+second + " successfully created as: " + ab.get(ab.size() - 1).element.getSig());
 	}
 	
+	/**
+	 * 
+	 */
 	public static void splitSig() {
 		System.out.println("Enter string to split: ");
 		String string = input.nextLine();
@@ -413,6 +465,9 @@ public class Main {
 		System.out.println("Signature for " + second + " successfully created as: " + b.get(b.size() - 1).element.getSig());
 	}
 	
+	/**
+	 * 
+	 */
 	public static void compareSigs() {
 		System.out.println("Enter first string to compare: ");
 		String first = input.nextLine();
@@ -429,86 +484,9 @@ public class Main {
 		}
 	}
 
-	public static void gFactors(String file) throws Exception {
-		CnfGrammar cnf = null;
-		LZ77 lz77 = new LZ77(32800, 250);
-		ArrayList<Reference> list = lz77.compress(file);
-		String[] result = lz77.getTuples(list);
-		cnf = converter.constructGrammar(result);
-		treeprinter.print(cnf.getStartNode());
-		System.out.println("our gfactors:");
-		for (String s : cnf.getgFactors()) {
-			System.out.println(s);
-		}
-	}
-
-	public static void compressAndBuild(String file) throws Exception {
-		Node node = null;
-
-		LZ77 lz77 = new LZ77(32800, 250);
-		ArrayList<Reference> list = lz77.compress(file);
-		for (Reference r : list) {
-			System.out.println(r.toString());
-		}
-		System.out.println("String to factorise: ");
-		lz77.decompress(list);
-		String[] result = lz77.getTuples(list);
-		System.out.println("LZ77 factorgsation: ");
-		for (String s : result) {
-			System.out.println(s);
-		}
-		System.out.println("Computing grammar...");
-		node = converter.create(result[0]);
-		treeprinter.print(node);
-		for (int i = 1; i < result.length; i++) {
-			node = converter.concatenate(node, converter.create(result[i]));
-			treeprinter.print(node);
-		}
-		node.setName("S");
-
-		System.out.println("LZ77 factors: " + result.length);
-		for (String s : result) {
-			System.out.println("- " + s);
-		}
-		System.out.println("Parse tree: ");
-		treeprinter.print(node);
-
-		System.out.println("Balance = " + node.getBalance());
-		System.out.println("Height = " + node.getHeight());
-		System.out.println("Size = " + node.size());
-		// System.out.println(4 +"th element = " + node.get(3));
-
-		System.out.println("Production Rules: ");
-		Set<String> set = node.addChildren(new HashSet<String>());
-		for (String s : set) {
-			converter.getNodes().get(s).printProduction();
-		}
-	}
-
-	public static void parseAndBuild(String file) {
-		CFG cfg = new CFG(file);
-		System.out.println("Is in CNF: " + cfg.isCNF());
-		System.out.println("Evaluation: " + cfg.evaluate());
-		System.out.println("Is cyclic: " + cfg.isCyclic());
-		CnfGrammar cnfGrammar = cfg.toCnfGrammar();
-		cnfGrammar.printTree();
-		cnfGrammar.balanceGrammar(tutorialMode);
-		cnfGrammar.printTree();
-	}
-
-	// We can now write this in a grammar file.
-	public static Node generateTree() {
-		Node nodex2 = new Terminal("X2", 'a');
-		Node nodex1 = new Terminal("X1", 'b');
-
-		Node nodex3 = new Branch("X3", nodex2, nodex1);
-		Node nodex4 = new Branch("X4", nodex3, nodex2);
-		Node nodex5 = new Branch("X5", nodex4, nodex3);
-		Node nodex6 = new Branch("X6", nodex5, nodex4);
-		Node nodex7 = new Branch("X7", nodex6, nodex5);
-		return nodex7;
-	}
-
+	/**
+	 * 
+	 */
 	private static void getAllFiles() {
 		File curDir = new File(".");
 		File[] filesList = curDir.listFiles();
