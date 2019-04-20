@@ -22,6 +22,7 @@ class LZ77Tests {
 		assertEquals(expected,result);
 	}
 	
+	@Test
 	void compressionTest2() {
 		LZ77 compressor = new LZ77(32500,250);
 		List<Reference> result = compressor.compress("aaaaaaaaaaa");
@@ -34,6 +35,7 @@ class LZ77Tests {
 		assertEquals(expected,result);
 	}
 	
+	@Test
 	void compressionTest3() {
 		LZ77 compressor = new LZ77(32500,250);
 		List<Reference> result = compressor.compress("thisisatestthisisatest");

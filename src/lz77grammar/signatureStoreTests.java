@@ -37,7 +37,7 @@ class signatureStoreTests {
 	}
 	
 	@Test
-	void concatEqualityTes2t() {
+	void concatEqualityTest3() {
 		SignatureStore signatureStore = new SignatureStore();
 		List<SequenceNode> a = signatureStore.storeSequence("test");
 		List<SequenceNode> b = signatureStore.storeSequence("ing");
@@ -46,5 +46,19 @@ class signatureStoreTests {
 		List<SequenceNode> ab = signatureStore.concatenate(a, b);
 		
 		assertFalse(expected.get(expected.size() - 1).element.getSig() == ab.get(ab.size() - 1).element.getSig());
+	}
+	
+	@Test
+	void concatEqualityTest4() {
+		SignatureStore signatureStore = new SignatureStore();
+		List<SequenceNode> a = signatureStore.storeSequence("test");
+		List<SequenceNode> b = signatureStore.storeSequence("ing");
+		List<SequenceNode> c = signatureStore.storeSequence("aaa");
+		List<SequenceNode> expected = signatureStore.storeSequence("testingingaaa");
+		
+		List<SequenceNode> ab = signatureStore.concatenate(a, b);
+		List<SequenceNode> abc = signatureStore.concatenate(ab, c);
+		
+		assertFalse(expected.get(expected.size() - 1).element.getSig() == abc.get(abc.size() - 1).element.getSig());
 	}
 }
