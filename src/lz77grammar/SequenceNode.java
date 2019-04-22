@@ -1,12 +1,16 @@
 package lz77grammar;
 
+import java.io.Serializable;
+
 /**
  * SequenceNode object used to represent a compressed sequence in our SignatureStore data structure.
  * @author Callum Onyenaobiya
  * 
  */
-class SequenceNode implements TreePrinterNode {
+class SequenceNode implements TreePrinterNode, Serializable {
 
+	private static final long serialVersionUID = -8681618095183150263L;
+	
 	private SequenceNode left;
 	private SequenceNode right;
 	Element element;

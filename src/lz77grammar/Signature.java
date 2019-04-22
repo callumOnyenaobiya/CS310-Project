@@ -1,5 +1,6 @@
 package lz77grammar;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -7,8 +8,10 @@ import java.util.Objects;
  * @author Callum Onyenaobiya
  * 
  */
-class Signature implements Element {
+class Signature implements Element, Serializable {
 
+	private static final long serialVersionUID = -1513135206877381389L;
+	
 	private int signature;
 	
 	Signature(int signature) {

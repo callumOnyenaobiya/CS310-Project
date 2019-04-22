@@ -1,5 +1,6 @@
 package lz77grammar;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -7,8 +8,10 @@ import java.util.Objects;
  * @author Callum Onyenaobiya
  * 
  */
-class Power implements Element {
-
+class Power implements Element, Serializable {
+		
+	private static final long serialVersionUID = 9148831329386922672L;
+	
 	private int power;
 	private char character;
 	private int signature;

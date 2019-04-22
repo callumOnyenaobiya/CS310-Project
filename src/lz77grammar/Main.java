@@ -302,7 +302,7 @@ public class Main {
 				out.println(productions[i]);
 			}
 			out.print(productions[productions.length-1]);
-			System.out.println("Grammar outputted to " + file + "successfully.");
+			System.out.println("Grammar outputted to " + file + " successfully.");
 		} catch(FileNotFoundException ex) {
 			System.out.println("Unable to output grammar to file");
 		}
@@ -339,6 +339,9 @@ public class Main {
 				} 
 				signatureStore = sigStore;
 				System.out.println("Signature loaded successfully.");
+				break;
+			case("s"):
+				saveSigStore();
 				break;
 			case ("o"):
 				sigOperations();
@@ -395,6 +398,7 @@ public class Main {
 			System.out.println("Signature store successfully saved as " + file);
 
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			System.out.println("Unable to output to file.");
 		}
 	}

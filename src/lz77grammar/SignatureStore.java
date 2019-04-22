@@ -19,7 +19,7 @@ import org.apache.commons.collections4.bidimap.DualHashBidiMap;
  */
 @SuppressWarnings("unused") class SignatureStore implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -872470916710859680L;
 
 	private Random prior;
 

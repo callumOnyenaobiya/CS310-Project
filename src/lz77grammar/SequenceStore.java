@@ -1,5 +1,6 @@
 package lz77grammar;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,9 @@ import java.util.List;
  * @author Callum Onyenaobiya
  * 
  */
-class SequenceStore {
+class SequenceStore implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	/**
 	 * List of stored Sequences, stored as SequenceNodes (A binary tree).
 	 */

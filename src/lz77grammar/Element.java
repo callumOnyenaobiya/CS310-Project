@@ -1,11 +1,13 @@
 package lz77grammar;
 
+import java.io.Serializable;
+
 /**
  * Element interface for SignatureStore data structure.
  * @author Callum Onyenaobiya
  * 
  */
-interface Element {
+interface Element extends Serializable {
 	/**
 	 * @return The character an element produces (if applicable)
 	 */
