@@ -57,7 +57,7 @@ public class Main {
 	public static void mainMenu() {
 		String option;
 		do {
-			System.out.println("Please select an option");
+			System.out.println("Please select an option:");
 			System.out.println("");
 			System.out.println("l - LZ77 operations");
 			System.out.println("g - Grammar operations");
