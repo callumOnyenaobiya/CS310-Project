@@ -8,10 +8,21 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * CFG object used to represent a parsed user grammar.
+ * @author Callum Onyenaobiya
+ *
+ */
 @SuppressWarnings("unchecked") class CFG {
 
+	/**
+	 * 
+	 */
 	HashMap<String, NonTerminal> map;
 
+	/**
+	 * @param file
+	 */
 	CFG(String file) {
 		BufferedReader b;
 		map = new HashMap<String, NonTerminal>();
@@ -38,10 +49,17 @@ import java.util.List;
 		}
 	}
 	
+	/**
+	 * @return A CnfGrammar object identical to the parsed CFG
+	 */
 	CnfGrammar toCnfGrammar() {
 		return new CnfGrammar(toCnfGrammar(map.get("S")));
 	}
 	
+	/**
+	 * @param nonTerminal starting Node to build CnfGrammar
+	 * @return start node of CnfGrammar
+	 */
 	private Node toCnfGrammar(NonTerminal nonTerminal) {
 		if (!isCNF()) {
 			System.out.println("CNF only");
@@ -77,6 +95,9 @@ import java.util.List;
 		}
 	}
 
+	/**
+	 * @return Returns True of CFG is in Chomksy Normal Form.
+	 */
 	public boolean isCNF() {
 		for (NonTerminal node : map.values()) {
 			if (!node.isCNF()) {
@@ -86,10 +107,18 @@ import java.util.List;
 		return true;
 	}
 
+	/**
+	 * @return Returns true if cycle exists in CFG.
+	 */
 	public boolean isCyclic() {
 		return isCyclic(map.get("S"), new HashSet<String>());
 	}
 
+	/**
+	 * @param node The current node
+	 * @param set Set containing previously seen NonTerminals
+	 * @return Returns true if cycle exists in CFG i.e the current nonterminal exists within our set.
+	 */
 	private boolean isCyclic(NonTerminal node, HashSet<String> set) {
 		set.add(node.getName());
 
@@ -116,14 +145,24 @@ import java.util.List;
 		return false;
 	}
 
+	/**
+	 * @return Evaluated string of CFG, from starting node S.
+	 */
 	public String evaluate() {
 		return map.get("S").evaluate();
 	}
 
+	/**
+	 * @author callum
+	 * Object to represent parsed NonTerminals in CFG.
+	 */
 	private class NonTerminal {
 		private String name;
 		private String right;
 
+		/**
+		 * @return Returns True if in Chomsky Normal Form.
+		 */
 		public boolean isCNF() {
 			int terminals = 0;
 			int nonTerminals = 0;
@@ -159,6 +198,10 @@ import java.util.List;
 			this.right = right.replaceAll("\\s+", "");
 		}
 
+		/**
+		 * @param left Left hand side of production, the NonTerminal.
+		 * @return The name of the NonTerminal i.e (A) = "A"
+		 */
 		private String processLeft(String left) {
 			left = left.replaceAll("\\s+", "");
 			if ((left.charAt(0) != '(') || (left.charAt(left.length() - 1) != ')')) {
@@ -168,6 +211,10 @@ import java.util.List;
 			return left.substring(1, left.length() - 1);
 		}
 
+		/**
+		 * @return Evaluates right hand side of production by building from left to right, recursively calling 
+		 * evaluate() on any seen NonTerminals.
+		 */
 		public String evaluate() {
 			char[] characters = right.toCharArray();
 			boolean isNonTerminal = false;

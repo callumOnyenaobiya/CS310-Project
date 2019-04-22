@@ -4,8 +4,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests for all grammar related operations.
+ * @author Callum Onyenaobiya
+ * 
+ */
 class grammarTests {
 
+	/**
+	 * Parses the file "grammarTest.txt".
+	 */
 	@Test
 	void parseGrammarTest() {
 		CFG cfg = new CFG("grammarTest.txt");
@@ -25,24 +33,36 @@ class grammarTests {
 		assertEquals(expectedCnfGrammar, cnfGrammar);
 	}
 
+	/**
+	 * Parses "grammarTest.txt" containing no cycles.
+	 */
 	@Test
 	void slpTest1() {
 		CFG cfg = new CFG("grammarTest.txt");
 		assertFalse(cfg.isCyclic());
 	}
 	
+	/**
+	 * Parses "grammarTest.txt" in Chomsky Normal Form.
+	 */
 	@Test
 	void cnfTest1() {
 		CFG cfg = new CFG("grammarTest.txt");
 		assertTrue(cfg.isCNF());
 	}
 	
+	/**
+	 * Parses "grammarTest2.txt" containing cycles.
+	 */
 	@Test
 	void slpTest2() {
 		CFG cfg = new CFG("grammarTest2.txt");
 		assertTrue(cfg.isCyclic());
 	}
 	
+	/**
+	 * Parses "grammarTest2.txt" not in Chomsky Normal Form.
+	 */
 	@Test
 	void cnfTest2() {
 		CFG cfg = new CFG("grammarTest2.txt");
@@ -51,6 +71,9 @@ class grammarTests {
 	
 	
 	
+	/**
+	 * Manually builds a balanced grammar, which our function should identify. 
+	 */
 	@Test
 	void balanceTest1() {
 		Terminal terminal1 = new Terminal("terminal1", 'a');
@@ -60,6 +83,9 @@ class grammarTests {
 		assertTrue(cnfGrammar.isBalanced());
 	}
 	
+	/**
+	 * Manually builds an unbalanced grammar, which our function should identify.
+	 */
 	@Test
 	void balanceTest2() {
 		Terminal terminal1 = new Terminal("terminal1", 'a');
@@ -73,6 +99,9 @@ class grammarTests {
 		assertFalse(cnfGrammar.isBalanced());
 	}
 	
+	/**
+	 * Takes an unbalanced grammar and correctly balances it.
+	 */
 	@Test
 	void rebalanceTest() {
 		Terminal terminal1 = new Terminal("terminal1", 'a');

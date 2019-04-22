@@ -6,12 +6,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+/**
+ * Converter methods used to convert LZ77 compressed tuples into a balanced SLP.
+ * @author Callum Onyenaobiya
+ * 
+ */
 class Converter {
 	private TreePrinter treeprinter;
 	private Map<String, Node> nodes;
 	private int index;
 	private int tutorialMode;
 	
+	/**
+	 * Initialised alphabet with all ascii characters.
+	 */
 	Converter(int tutorialMode) {
 		this.tutorialMode = tutorialMode;
 		this.index = 0;
@@ -27,10 +35,20 @@ class Converter {
 		return nodes;
 	}
 	
+	/**
+	 * Adds a new node to our map.
+	 * @param string
+	 * @param node
+	 */
 	private void addNode(String string, Node node) {
 		nodes.put(string, node);
 	}
 
+	/**
+	 * Constructs a balanced SLP from a set of LZ77-factors or G-factors.
+	 * @param factors LZ77-factors or G-factors.
+	 * @return a balanced SLP.
+	 */
 	CnfGrammar constructGrammar(String[] factors) {
 		Node node = create(factors[0]);
 		for (int i = 1; i < factors.length; i++) {
@@ -41,31 +59,12 @@ class Converter {
 		return cnfGrammar;
 	}
 	
-//	public Map<String, Integer> gFactors(Node root, Map<String, Integer> map){
-//		if(root instanceof Terminal) {
-//			tutorialMode(("G factor:" + root.evaluate());
-//			map.put(root.evaluate(), zeroIfNull(map.get(root.evaluate()))+1);
-//			return map;
-//		}
-//		if(map.containsKey(root.evaluate())) {
-//			tutorialMode(("G factor:" + root.evaluate());
-//			map.put(root.evaluate(), zeroIfNull(map.get(root.evaluate()))+1);
-//			return map;
-//		} else {
-//			map.put(root.evaluate(), 0);
-//		}
-//		map = gFactors(root.getLeft(), map);
-//		map = gFactors(root.getRight(), map);
-//		return map;
-//	}
-	
-//	public int zeroIfNull(Integer a) {
-//		if(a != null) {
-//			return a;
-//		}
-//		return 0;
-//	}
-	
+	/**
+	 * Concatenate two nodes
+	 * @param a
+	 * @param b
+	 * @return a balanced SLP, ab.
+	 */
 	private Node concatenate(Node a, Node b) {
 		Node newNode = null;
 		if(Math.abs(a.getHeight() - b.getHeight()) <= 1) {
@@ -84,6 +83,12 @@ class Converter {
 		return newNode;
 	}
 	
+	/**
+	 * Concatenating b to the left most branch of a.
+	 * @param a
+	 * @param b
+	 * @return 
+	 */
 	private Node leftConcatenate(Node a, Node b) {
 		Node current = b;
 		Node newNode = null;
@@ -116,6 +121,12 @@ class Converter {
 		return b;
 	}
 	
+	/**
+	 * Concatenating a to the right most branch of b.
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	private Node rightConcatenate(Node a, Node b) {
 		Node current = a;
 		Node newNode = null;
@@ -149,6 +160,11 @@ class Converter {
 		return a;
 	}
 
+	/**
+	 * Rebalancing helper function if tree is left heavy.
+	 * @param node Root node of tree.
+	 * @return A balanced SLP.
+	 */
 	private Node leftBalance(Node node) {
 		if(node.getLeft().getHeight() == node.getRight().getHeight() + 2) {
 			tutorialMode("Left balance required");
@@ -162,12 +178,22 @@ class Converter {
 		return node;
 	}
 	
+	/**
+	 * Helper function for rebalancing.
+	 * @param node Root node of tree.
+	 * @return left rotated SLP.
+	 */
 	private Node leftRotation1(Node node) {
 		Node newNodeRight = new Branch("X" + index++, node.getLeft().getRight().clone(),  node.getRight().clone());
 		addNode(newNodeRight.evaluate(), newNodeRight);
 		return new Branch("X" + index++, node.getLeft().getLeft().clone(), newNodeRight);
 	}
 	
+	/**
+	 * Helper function for rebalancing.
+	 * @param node Root node of tree.
+	 * @return left rotated SLP.
+	 */
 	private Node leftRotation2(Node node) {
 		Node newNodeRight = new Branch("X" + index++, node.getLeft().getRight().getRight().clone(),  node.getRight().clone());
 		addNode(newNodeRight.evaluate(), newNodeRight);
@@ -176,6 +202,11 @@ class Converter {
 		return new Branch("X" + index++, newNodeLeft, newNodeRight);
 	}
 	
+	/**
+	 * Rebalancing helper function if tree is right heavy.
+	 * @param node Root node of tree.
+	 * @return A balanced SLP.
+	 */
 	private Node rightBalance(Node node) {
 		if(node.getRight().getHeight() == node.getLeft().getHeight() + 2) {
 			tutorialMode("Right balance required");
@@ -189,12 +220,22 @@ class Converter {
 		return node;
 	}
 	
+	/**
+	 * Helper function for rebalancing.
+	 * @param node Root node of tree.
+	 * @return right rotated SLP.
+	 */
 	private Node rightRotation1(Node node) {
 		Node newNodeLeft = new Branch("X" + index++, node.getLeft().clone(), node.getRight().getLeft().clone());
 		addNode(newNodeLeft.evaluate(), newNodeLeft);
 		return new Branch("X" + index++, newNodeLeft, node.getRight().getRight().clone());
 	}
 	
+	/**
+	 * Helper function for rebalancing.
+	 * @param node Root node of tree.
+	 * @return right rotated SLP.
+	 */
 	private Node rightRotation2(Node node) {
 		Node newNodeLeft = new Branch("X" + index++, node.getLeft().clone(), node.getRight().getLeft().getLeft().clone());
 		addNode(newNodeLeft.evaluate(), newNodeLeft);
@@ -203,6 +244,11 @@ class Converter {
 		return new Branch("X" + index++, newNodeLeft, newNodeRight);
 	}
 	
+	/**
+	 * Builds an SLP for given word from existing NonTerminals
+	 * @param word word requiring an SLP.
+	 * @return SLP generating word.
+	 */
 	private Node create(String word) {
 		Node node = null;
 		if(nodes.containsKey(word)) {
@@ -229,6 +275,12 @@ class Converter {
 		return node;
 	}
 	
+	/**
+	 * Check if NonTerminals exist for given strings.
+	 * @param list List of strings requiring NonTerminals
+	 * @param nodes current map of NonTerminals
+	 * @return True of all strings have NonTerminals existing in map.
+	 */
 	private boolean hasNodes(List<String> list, Map<String, Node> nodes) {
 		for(String s : list) {
 			if(!nodes.containsKey(s)) {
@@ -238,6 +290,11 @@ class Converter {
 		return true;
 	}
 	
+	/**
+	 * Decomposes a string into all possible permutations.
+	 * @param str
+	 * @return List of all possible permutations of a string.
+	 */
 	private List<List<String>> decompose(String str) {
 	    List<List<String>> result = new ArrayList<>();
 
@@ -258,12 +315,19 @@ class Converter {
 		return result;
 	}
 	
+	/**
+	 * @param string
+	 */
 	private void tutorialMode(String string) {
 		if(tutorialMode == 1) {
 			System.out.println(string);
 		}
 	}
 	
+	/**
+	 * Prints out parse tree rooted at given node.
+	 * @param node Root node.
+	 */
 	private void tutorialTree(Node node) {
 		if(tutorialMode == 1) {
 			treeprinter.print(node);

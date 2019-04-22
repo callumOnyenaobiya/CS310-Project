@@ -5,12 +5,21 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Object representing a grammar in CNF.
+ * @author Callum Onyenaobiya
+ * 
+ */
 class CnfGrammar {
 
 	private Node startNode;
 	private List<String> gFactors;
 	private TreePrinter treeprinter;
 
+	/**
+	 * Build new CnfGrammar from starting node.
+	 * @param startNode
+	 */
 	CnfGrammar(Node startNode) {
 		this.startNode = startNode;
 		gFactors = new LinkedList<String>();
@@ -22,6 +31,9 @@ class CnfGrammar {
 		return startNode;
 	}
 	
+	/**
+	 * @return String evaluated from the start node.
+	 */
 	String evaluate() {
 		return this.startNode.evaluate();
 	}
@@ -30,6 +42,9 @@ class CnfGrammar {
 		this.startNode = startNode;
 	}
 	
+	/**
+	 * @return return True if tree rooted at start node is balanced.
+	 */
 	Boolean isBalanced() {
 		return this.startNode.getBalance() == 0 || this.startNode.getBalance() == 1;
 	}
@@ -38,11 +53,20 @@ class CnfGrammar {
 		return gFactors;
 	}
 
+	/**
+	 * Recursively builds gFactors from current node, given a set of current NonTerminals.
+	 */
 	void loadGfactors() {
 		gFactors = new LinkedList<String>();
 		gFactors(startNode, new HashSet<String>());
 	}
 
+	/**
+	 * Builds objects gFactors list by running a pre order traversal on the grammar.
+	 * @param root current Node
+	 * @param map set of NonTerminal evaluations already processed before this node.
+	 * @return set of NonTerminal evaluations already processed, including this node and its children.
+	 */
 	private Set<String> gFactors(Node root, Set<String> map) {
 		if (root instanceof Terminal) {
 			gFactors.add(root.evaluate());
@@ -61,20 +85,32 @@ class CnfGrammar {
 		return map;
 	}
 
+	/**
+	 * Balances grammar using gFactors and LZ77-SLP construction methods.
+	 */
 	void balanceGrammar(int tutorialMode) {
 		loadGfactors();
 		Converter converter = new Converter(tutorialMode);
 		startNode = converter.constructGrammar(gFactors.toArray(new String[0])).startNode;
 	}
 
+	/**
+	 * @return builds a set of productions recursively from start node, loading all unique productions using a set.
+	 */
 	public Set<String> getProductions() {
 		return startNode.getProductions(new HashSet<String>());
 	}
 
+	/**
+	 * View CnfGrammar as a parse tree, rooted from start node.
+	 */
 	void printTree() {
 		treeprinter.print(startNode);
 	}
 
+	/**
+	 * Overrided implementation of equals. Equality based on Equality of starting nodes.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof CnfGrammar) {

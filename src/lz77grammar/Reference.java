@@ -2,6 +2,11 @@ package lz77grammar;
 
 import java.io.Serializable;
 
+/**
+ * Reference object used to represent an LZ77-Compressed tuple.
+ * @author Callum Onyenaobiya
+ * 
+ */
 class Reference implements Serializable {
 	/**
 	 * 
@@ -28,12 +33,18 @@ class Reference implements Serializable {
 	}// end constructor
 		// ---------------------------------------------------//
 
+	/**
+	 *
+	 */
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "Offset: " + offset + ", stringLen :" + stringLen + ", nextChar: " + nextChar;
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Reference) {

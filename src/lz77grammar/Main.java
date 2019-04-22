@@ -13,7 +13,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+/**
+ * Initialises CLI program.
+ * @author Callum Onyenaobiya
+ *
+ */
 @SuppressWarnings("unchecked")
 public class Main {
 
@@ -27,8 +31,9 @@ public class Main {
 	static Scanner intInput;
 
 	/**
+	 * Initialises program main menu.
 	 * @param args
-	 * test
+	 * 
 	 */
 	public static void main(String[] args) {
 		input = new Scanner(System.in);
@@ -46,6 +51,7 @@ public class Main {
 	}
 
 	/**
+	 * Displays the main menu of the program.
 	 * 
 	 */
 	public static void mainMenu() {
@@ -77,6 +83,7 @@ public class Main {
 	}
 
 	/**
+	 * Displays grammar menu for the program.
 	 * 
 	 */
 	public static void grammarMenu() {
@@ -109,14 +116,16 @@ public class Main {
 	}
 	
 	/**
-	 * @param cnfGrammar
+	 * Displays the parse tree of a given CnfGrammar.
+	 * @param cnfGrammar CnfGrammar to be displayed as parse tree.
 	 */
 	public static void viewParseTree(CnfGrammar cnfGrammar) {
 		cnfGrammar.printTree();
 	}
 
 	/**
-	 * @return
+	 * Takes use input file to parse.
+	 * @return CnfGrammar object of parsed grammar.
 	 */
 	public static CnfGrammar parseGrammar() {
 		System.out.println("Enter grammar file to parse: ");
@@ -163,7 +172,7 @@ public class Main {
 	}
 
 	/**
-	 * 
+	 * Displays menu options for LZ77 related functions.
 	 */
 	public static void lz77Menu() {
 		String option;
@@ -189,7 +198,7 @@ public class Main {
 	}
 
 	/**
-	 * 
+	 * Takes user input file and outputs compressed file to desired location.
 	 */
 	public static void lz77Compression() {
 		System.out.println("File to compress: ");
@@ -224,7 +233,7 @@ public class Main {
 	}
 
 	/**
-	 * 
+	 * Takes user input lz77 file and outputs decompressed file to desired location.
 	 */
 	public static void lz77Decompression() {
 		System.out.println("File to decompress: ");
@@ -255,7 +264,7 @@ public class Main {
 	}
 
 	/**
-	 * 
+	 * Takes user input lz77 file and outputs grammar to file.
 	 */
 	public static void lz77Slp() {
 		System.out.println("File to convert: ");
@@ -283,8 +292,8 @@ public class Main {
 	}
 	
 	/**
-	 * @param cnfGrammar
-	 * @param file
+	 * @param cnfGrammar CnfGrammar to be stored.
+	 * @param file File location for CnfGrammar
 	 */
 	public static void productionsToFile(CnfGrammar cnfGrammar, String file) {
 		try (PrintWriter out = new PrintWriter(file)) {
@@ -300,7 +309,7 @@ public class Main {
 	}
 	
 	/**
-	 * 
+	 * Displays menu for sequence data structure related operations.
 	 */
 	public static void signatureMenu() {
 		String option;
@@ -339,7 +348,8 @@ public class Main {
 	}
 	
 	/**
-	 * @return
+	 * Loads a SignatureStore object from user input file.
+	 * @return a SignatureStore object.
 	 */
 	public static SignatureStore loadSigStore() {
 		System.out.println("Signature store file to load: ");
@@ -362,7 +372,8 @@ public class Main {
 	}
 	
 	/**
-	 * @return
+	 * Creates a new SignatureStore object
+	 * @return a SignatureStore object.
 	 */
 	public static SignatureStore newSigStore() {
 		SignatureStore signatureStore = new SignatureStore();
@@ -370,7 +381,7 @@ public class Main {
 	}
 	
 	/**
-	 * 
+	 * Saves current SignatureStore to user defined file.
 	 */
 	public static void saveSigStore() {
 		System.out.println("File name: ");
@@ -389,7 +400,7 @@ public class Main {
 	}
 	
 	/**
-	 * 
+	 * Displays menu for list of Sequence Data Structure Operations.
 	 */
 	public static void sigOperations() {
 		String option;
@@ -418,7 +429,7 @@ public class Main {
 	}
 	
 	/**
-	 * 
+	 * Takes user input string and creates new signature using loaded SignatureStore, storing in SignatureStore.
 	 */
 	public static void createSig() {
 		System.out.println("Enter string to convert to signature: ");
@@ -428,7 +439,8 @@ public class Main {
 	}
 	
 	/**
-	 * 
+	 * Takes two user input strings and concatenates their signatures using loaded SignatureStore, storing
+	 * new signature in SignatureStore.
 	 */
 	public static void concatenateSigs() {
 		System.out.println("Enter first string to concatenate: ");
@@ -447,7 +459,8 @@ public class Main {
 	}
 	
 	/**
-	 * 
+	 * Takes user input string and position, splitting sequence at given position creating two new signatures using loaded SignatureStore. Stores new
+	 * signatures in SignatureStore.
 	 */
 	public static void splitSig() {
 		System.out.println("Enter string to split: ");
@@ -466,7 +479,7 @@ public class Main {
 	}
 	
 	/**
-	 * 
+	 * Takes two user input strings and compares their signatures.
 	 */
 	public static void compareSigs() {
 		System.out.println("Enter first string to compare: ");
@@ -485,7 +498,7 @@ public class Main {
 	}
 
 	/**
-	 * 
+	 * Prints files from current directory.
 	 */
 	private static void getAllFiles() {
 		File curDir = new File(".");

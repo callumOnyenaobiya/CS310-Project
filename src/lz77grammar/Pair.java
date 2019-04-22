@@ -2,6 +2,11 @@ package lz77grammar;
 
 import java.util.Objects;
 
+/**
+ * Pair object used to represent a pair of signatures for SignatureStore data structure.
+ * @author Callum Onyenaobiya
+ * 
+ */
 class Pair {
 	private Signature l;
 	private Signature r;
@@ -27,6 +32,9 @@ class Pair {
 		this.r = r;
 	}
 
+	/**
+	 * Overrided equals method, pair is equal if both signatures in pair are equal.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Pair) {

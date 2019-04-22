@@ -7,59 +7,55 @@ class TreePrinter {
 
 	/**
 	 * Print a tree
-	 * 
-	 * @param root tree root TreePrinterNode
+	 * Inspired by https://stackoverflow.com/a/29704252
+	 * @param root Root of printed tree.
 	 */
 	void print(TreePrinterNode root) {
-		
+
 		List<List<String>> lines = new ArrayList<List<String>>();
 		List<TreePrinterNode> level = new ArrayList<TreePrinterNode>();
 		List<TreePrinterNode> next = new ArrayList<TreePrinterNode>();
-
 		level.add(root);
-		int nn = 1;
 
-		int widest = 0;
+		int nextNode = 1;
+		int MaxWidth = 0;
 
-		while (nn != 0) {
+		while (nextNode != 0) {
 			List<String> line = new ArrayList<String>();
-
-			nn = 0;
-
+			nextNode = 0;
 			for (TreePrinterNode n : level) {
 				if (n == null) {
 					line.add(null);
-
 					next.add(null);
 					next.add(null);
 				} else {
 					String aa = n.getText();
 					line.add(aa);
-					if (aa.length() > widest)
-						widest = aa.length();
-
+					if (aa.length() > MaxWidth) {
+						MaxWidth = aa.length();
+					}
 					next.add(n.getLeft());
 					next.add(n.getRight());
 
-					if (n.getLeft() != null)
-						nn++;
-					if (n.getRight() != null)
-						nn++;
+					if (n.getLeft() != null) {
+						nextNode++;
+					}
+					if (n.getRight() != null) {
+						nextNode++;
+					}
 				}
 			}
-
-			if (widest % 2 == 1)
-				widest++;
-
+			if (MaxWidth % 2 == 1) {
+				MaxWidth++;
+			}
 			lines.add(line);
-
 			List<TreePrinterNode> tmp = level;
 			level = next;
 			next = tmp;
 			next.clear();
 		}
 
-		int perpiece = lines.get(lines.size() - 1).size() * (widest + 4);
+		int perpiece = lines.get(lines.size() - 1).size() * (MaxWidth + 2);
 		for (int i = 0; i < lines.size(); i++) {
 			List<String> line = lines.get(i);
 			int hpw = (int) Math.floor(perpiece / 2f) - 1;
@@ -85,13 +81,20 @@ class TreePrinter {
 							System.out.print(" ");
 						}
 					} else {
-
 						for (int k = 0; k < hpw; k++) {
-							System.out.print(j % 2 == 0 ? " " : "─");
+							if (j % 2 == 0) {
+								System.out.print(" ");
+							} else {
+								System.out.print("─");
+							}
 						}
 						System.out.print(j % 2 == 0 ? "┌" : "┐");
 						for (int k = 0; k < hpw; k++) {
-							System.out.print(j % 2 == 0 ? "─" : " ");
+							if (j % 2 == 0) {
+								System.out.print("─");
+							} else {
+								System.out.print(" ");
+							}
 						}
 					}
 				}

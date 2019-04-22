@@ -2,6 +2,11 @@ package lz77grammar;
 
 import java.util.Objects;
 
+/**
+ * Signature object used to represent a signature in our SignatureStore data structure.
+ * @author Callum Onyenaobiya
+ * 
+ */
 class Signature implements Element {
 
 	private int signature;
@@ -42,6 +47,9 @@ class Signature implements Element {
 		return Objects.hash(signature);
 	}
 
+	/**
+	 * Overrided equals method, returns true if both signature values are equal.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj) {

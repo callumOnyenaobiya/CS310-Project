@@ -2,12 +2,22 @@ package lz77grammar;
 
 import java.util.ArrayList;
 
+/**
+ * Functions required to compress a string into LZ77-compressed tuples.
+ * @author Callum Onyenaobiya
+ * 
+ */
 @SuppressWarnings("unused") class LZ77 {
 
 	private int searchWindowLen;
 	private int lookAheadWindowLen;
 
 	
+	/**
+	 * Creates an instance of our LZ77 converter
+	 * @param searchWindowLen Number of characters in our search window
+	 * @param lookAheadWindowLen Number of characters in our lookAhead window.
+	 */
 	LZ77(int searchWindowLen, int lookAheadWindowLen) {
 		this.searchWindowLen = searchWindowLen;
 		this.lookAheadWindowLen = lookAheadWindowLen;
@@ -18,7 +28,6 @@ import java.util.ArrayList;
 		return searchWindowLen;
 	}
 
-
 	public void setSearchWindowLen(int searchWindowLen) {
 		this.searchWindowLen = searchWindowLen;
 	}
@@ -28,12 +37,16 @@ import java.util.ArrayList;
 		return lookAheadWindowLen;
 	}
 
-
 	public void setLookAheadWindowLen(int lookAheadWindowLen) {
 		this.lookAheadWindowLen = lookAheadWindowLen;
 	}
 
 
+	/**
+	 * Compress a string into Tuples using LZ77 algorithm.
+	 * @param rawData String to compress.
+	 * @return List of LZ77-Compressed tuples.
+	 */
 	ArrayList<Reference> compress(String rawData) {
 		Reference thisReference;
 		String searchSubstring;
@@ -43,11 +56,6 @@ import java.util.ArrayList;
 		int searchWindowStart;
 		int lookAheadWindowEnd;
 		ArrayList<Reference> encodedData = new ArrayList<Reference>();
-		//String rawData = new String(Files.readAllBytes(Paths.get(file)));
-		// System.out.println(rawData);
-		// System.out.println();//blank line
-
-		// Start attempting to compress from first character
 		headPos = 0;
 		while (headPos < rawData.length()) {
 			// Create start of search window
@@ -142,6 +150,11 @@ import java.util.ArrayList;
 		return encodedData;
 	}
 
+	/**
+	 * Decompress a list of LZ77-Compressed tuples into the output string using LZ77 algorithm.
+	 * @param encodedData List of LZ77-Compressed tuples.
+	 * @return Decompressed message.
+	 */
 	String decompress(ArrayList<Reference> encodedData) {
 		StringBuffer reconData = new StringBuffer();
 		for (Reference next : encodedData) {
@@ -158,6 +171,11 @@ import java.util.ArrayList;
 		return new String(reconData);
 	}
 
+	/**
+	 * Convert a list of LZ77-Compressed tuples into their respective strings.
+	 * @param encodedData List of LZ77-Compressed tuples
+	 * @return Array of strings represented by tuples, used to build balanced SLPs.
+	 */
 	String[] getTuples(ArrayList<Reference> encodedData) {
 		StringBuffer reconData = new StringBuffer();
 		String[] result = new String[encodedData.size()];
@@ -182,21 +200,44 @@ import java.util.ArrayList;
 		return result;
 	}
 
+	/**
+	 * Research purposes only.
+	 * Convert Offset into binary representation
+	 * @param offset
+	 * @return Binary representation of offset value.
+	 */
 	private String offsetToBinary(int offset) {
 		return String.format("%" + Integer.toBinaryString(this.searchWindowLen).length() + "s",
 				Integer.toBinaryString(offset)).replace(' ', '0');
 	}
 
+	/**
+	 * Research puropses only.
+	 * Convert stringLen into binary representation
+	 * @param stringLen
+	 * @return Binary representation of stringLen value.
+	 */
 	private String stringLenToBinary(int stringLen) {
 		return String.format("%" + Integer.toBinaryString(this.lookAheadWindowLen).length() + "s",
 				Integer.toBinaryString(stringLen)).replace(' ', '0');
 	}
 
+	/**
+	 * Research purposes only.
+	 * Convert nextChar into binary representation.
+	 * @param nextChar
+	 * @return Binary representation of nextChar.
+	 */
 	private String nextCharToBinary(String nextChar) {
 		return String.format("%8s", Integer.toBinaryString((int) nextChar.charAt(0))).replace(' ', '0');
 	}
 
-	/*void bitStreamToString(String bitStream) {
+	/**
+	 * Research purposes only.
+	 * @param bitStream bitStream representation of LZ77-Compressed tuples.
+	 * Prints decompressed bitstream.
+	 */
+	void bitStreamToString(String bitStream) {
 		ArrayList<Reference> output = new ArrayList<Reference>();
 		int headPos = 0;
 		int offset;
@@ -216,10 +257,21 @@ import java.util.ArrayList;
 		decompress(output);
 	}
 
+	/**
+	 * Research purposes only.
+	 * @param value 
+	 * @return Bits required to represent value.
+	 */
 	static int getBitsRequired(int value) {
 		return Integer.SIZE - Integer.numberOfLeadingZeros(value);
 	}
 	
+	/**
+	 * Research purposes only.
+	 * Converts list of LZ77-Compressed tuples into a bitstream.
+	 * @param References
+	 * @return Bitstream of LZ77-Compressed tuples.
+	 */
 	String toBitStream(ArrayList<Reference> References) {
 		StringBuffer bitStream = new StringBuffer();
 		for (Reference Reference : References) {
@@ -231,5 +283,5 @@ import java.util.ArrayList;
 		String result = new String(bitStream);
 		System.out.println("Length of bitstream: " + result.length());
 		return result;
-	}*/
+	}
 }

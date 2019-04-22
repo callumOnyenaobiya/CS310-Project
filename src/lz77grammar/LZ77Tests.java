@@ -7,8 +7,16 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Test for LZ77 related operations.
+ * @author Callum Onyenaobiya
+ * 
+ */
 class LZ77Tests {
 
+	/**
+	 * Compresses the string "aabbaaab" into the desired tuples.
+	 */
 	@Test
 	void compressionTest1() {
 		LZ77 compressor = new LZ77(32500,250);
@@ -22,6 +30,9 @@ class LZ77Tests {
 		assertEquals(expected,result);
 	}
 	
+	/**
+	 * Compresses the string "aaaaaaaaaaa" into the desired tuples.
+	 */
 	@Test
 	void compressionTest2() {
 		LZ77 compressor = new LZ77(32500,250);
@@ -35,6 +46,9 @@ class LZ77Tests {
 		assertEquals(expected,result);
 	}
 	
+	/**
+	 * Compresses the string "thisisatestthisisatest" into the desired tuples.
+	 */
 	@Test
 	void compressionTest3() {
 		LZ77 compressor = new LZ77(32500,250);
@@ -52,6 +66,9 @@ class LZ77Tests {
 		assertEquals(expected,result);
 	}
 	
+	/**
+	 * Decompresses a set of tuples, expecting the result "aabbaaab".
+	 */
 	@Test
 	void decompressionTest() {
 		LZ77 compressor = new LZ77(32500,250);
@@ -66,6 +83,9 @@ class LZ77Tests {
 		assertEquals(expected, result);
 	}
 	
+	/**
+	 * Decompresses a set of tuples, expecting the result "aaaaaaaaaaa".
+	 */
 	@Test
 	void decompressionTest2() {
 		LZ77 compressor = new LZ77(32500,250);
@@ -80,6 +100,9 @@ class LZ77Tests {
 		assertEquals(expected, result);
 	}
 	
+	/**
+	 * Decompresses a set of tuples, expecting the result "thisisatestthisisatest".
+	 */
 	@Test
 	void decompressionTest3() {
 		LZ77 compressor = new LZ77(32500,250);

@@ -3,22 +3,36 @@ package lz77grammar;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Terminal object represents a terminal production in CnfGrammar i.e. (A) -{@literal >} a
+ * @author Callum Onyenaobiya
+ * 
+ */
 class Terminal implements Node, Cloneable {
 
 	private char character;
 	private String name;
 
+	/**
+	 * Terminal objects have no children aside from the terminal they produce.
+	 */
 	@Override
 	public HashSet<String> addChildren(HashSet<String> set) {
 		set.add(evaluate());
 		return set;
 	}
 
+	/**
+	 * Evaluation of a terminal object simply produces the character.
+	 */
 	@Override
 	public String evaluate() {
 		return String.valueOf(character);
 	}
 
+	/**
+	 * Adds production (A)-{@literal >}a to set of productions.
+	 */
 	@Override
 	public Set<String> getProductions(Set<String> productions) {
 		Set<String> newProductions = productions;
@@ -33,7 +47,6 @@ class Terminal implements Node, Cloneable {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return name;
 	}
 
@@ -52,7 +65,6 @@ class Terminal implements Node, Cloneable {
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
@@ -73,7 +85,6 @@ class Terminal implements Node, Cloneable {
 			t.character = character;
 			return t;
 		} catch (CloneNotSupportedException e) {
-			// Will not happen in this case
 			return null;
 		}
 	}
@@ -96,28 +107,27 @@ class Terminal implements Node, Cloneable {
 
 	@Override
 	public Node getLeft() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void setRight(Node right) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void setLeft(Node left) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public Node getRight() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Overrided equals method. Terminal Objects are equal if their name and character are equal.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Terminal) {

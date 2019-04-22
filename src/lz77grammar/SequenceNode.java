@@ -1,5 +1,10 @@
 package lz77grammar;
 
+/**
+ * SequenceNode object used to represent a compressed sequence in our SignatureStore data structure.
+ * @author Callum Onyenaobiya
+ * 
+ */
 class SequenceNode implements TreePrinterNode {
 
 	private SequenceNode left;
@@ -25,6 +30,9 @@ class SequenceNode implements TreePrinterNode {
 		return right;
 	}
 
+	/**
+	 * Text representation of current node, used in TreePrinter.
+	 */
 	@Override
 	public String getText() {
 		if(text != null) {
