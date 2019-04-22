@@ -348,7 +348,6 @@ public class Main {
 				break;
 			}
 		} while (!option.equals("q"));		
-		
 	}
 	
 	/**
