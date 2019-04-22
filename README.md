@@ -1,2 +1,3 @@
 # lz77SlpConverter
 CLI application to convert between LZ77 factorization and Straight Line Programs
+Docs : https://u1604913.github.io/CS310-Project/lz77grammar/package-summary.html
