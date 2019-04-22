@@ -15,13 +15,11 @@ class Converter {
 	private TreePrinter treeprinter;
 	private Map<String, Node> nodes;
 	private int index;
-	private int tutorialMode;
 	
 	/**
 	 * Initialised alphabet with all ascii characters.
 	 */
-	Converter(int tutorialMode) {
-		this.tutorialMode = tutorialMode;
+	Converter() {
 		this.index = 0;
 		nodes = new HashMap<String, Node>();
 		for (int i = 0; i <= 255; i++) {
@@ -167,7 +165,6 @@ class Converter {
 	 */
 	private Node leftBalance(Node node) {
 		if(node.getLeft().getHeight() == node.getRight().getHeight() + 2) {
-			tutorialMode("Left balance required");
 			if(node.getLeft().getLeft().getHeight() > node.getLeft().getRight().getHeight()) {
 				return leftRotation1(node);
 			} else if (node.getLeft().getRight().getHeight() > node.getLeft().getLeft().getHeight()) {
@@ -209,7 +206,6 @@ class Converter {
 	 */
 	private Node rightBalance(Node node) {
 		if(node.getRight().getHeight() == node.getLeft().getHeight() + 2) {
-			tutorialMode("Right balance required");
 			if(node.getRight().getRight().getHeight() > node.getRight().getLeft().getHeight()) {
 				return rightRotation1(node);
 			} else if (node.getRight().getLeft().getHeight() > node.getRight().getRight().getHeight()) {
@@ -252,18 +248,11 @@ class Converter {
 	private Node create(String word) {
 		Node node = null;
 		if(nodes.containsKey(word)) {
-			tutorialMode(word + " found");
 			return nodes.get(word);
 		}
-		tutorialMode(word + " not found");
 		List<List<String>> splits = decompose(word);
 		for(List<String> list : splits) {
 			if(hasNodes(list, nodes)) {
-				tutorialMode("Can get from: ");
-				for(String s : list) {
-					tutorialMode(s + ",");
-				}
-				tutorialMode("");
 				node = nodes.get(list.get(0));
 				for(int i = 1; i < list.size(); i++) {
 					node = concatenate(node, nodes.get(list.get(i)));
@@ -271,7 +260,6 @@ class Converter {
 				break;
 			}
 		}
-		tutorialTree(node);
 		return node;
 	}
 	
@@ -319,9 +307,7 @@ class Converter {
 	 * @param string
 	 */
 	private void tutorialMode(String string) {
-		if(tutorialMode == 1) {
-			System.out.println(string);
-		}
+		System.out.println(string);
 	}
 	
 	/**
@@ -329,8 +315,6 @@ class Converter {
 	 * @param node Root node.
 	 */
 	private void tutorialTree(Node node) {
-		if(tutorialMode == 1) {
-			treeprinter.print(node);
-		}
+		treeprinter.print(node);
 	}
 }

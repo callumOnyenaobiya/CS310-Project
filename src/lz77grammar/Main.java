@@ -25,7 +25,6 @@ public class Main {
 	static TreePrinter treeprinter;
 	static SignatureStore signatureStore;
 	static LZ77 lz77Compressor;
-	static int tutorialMode;
 
 	static Scanner input;
 	static Scanner intInput;
@@ -38,8 +37,7 @@ public class Main {
 	public static void main(String[] args) {
 		input = new Scanner(System.in);
 		intInput = new Scanner(System.in);
-		tutorialMode = 0;
-		converter = new Converter(tutorialMode);
+		converter = new Converter();
 
 		treeprinter = new TreePrinter();
 

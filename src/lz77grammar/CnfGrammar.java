@@ -90,7 +90,7 @@ class CnfGrammar {
 	 */
 	void balanceGrammar(int tutorialMode) {
 		loadGfactors();
-		Converter converter = new Converter(tutorialMode);
+		Converter converter = new Converter();
 		startNode = converter.constructGrammar(gFactors.toArray(new String[0])).startNode;
 	}
 
