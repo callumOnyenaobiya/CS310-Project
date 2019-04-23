@@ -10,7 +10,7 @@ import java.util.Set;
  * @author Callum Onyenaobiya
  * 
  */
-class CnfGrammar {
+class Grammar {
 
 	private Node startNode;
 	private List<String> gFactors;
@@ -20,7 +20,7 @@ class CnfGrammar {
 	 * Build new CnfGrammar from starting node.
 	 * @param startNode
 	 */
-	CnfGrammar(Node startNode) {
+	Grammar(Node startNode) {
 		this.startNode = startNode;
 		gFactors = new LinkedList<String>();
 		gFactors(startNode, new HashSet<String>());
@@ -113,9 +113,9 @@ class CnfGrammar {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof CnfGrammar) {
-			CnfGrammar cnfGrammar = (CnfGrammar) obj;
-			return (startNode.equals(cnfGrammar.getStartNode()));
+		if (obj instanceof Grammar) {
+			Grammar grammar = (Grammar) obj;
+			return (startNode.equals(grammar.getStartNode()));
 		}
 		return false;
 	}

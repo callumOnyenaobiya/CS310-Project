@@ -13,7 +13,7 @@ import java.util.List;
  * @author Callum Onyenaobiya
  *
  */
-@SuppressWarnings("unchecked") class CFG {
+@SuppressWarnings("unchecked") class GrammarParser {
 
 	/**
 	 * 
@@ -23,7 +23,7 @@ import java.util.List;
 	/**
 	 * @param file
 	 */
-	CFG(String file) {
+	GrammarParser(String file) {
 		BufferedReader b;
 		map = new HashMap<String, NonTerminal>();
 
@@ -52,8 +52,8 @@ import java.util.List;
 	/**
 	 * @return A CnfGrammar object identical to the parsed CFG
 	 */
-	CnfGrammar toCnfGrammar() {
-		return new CnfGrammar(toCnfGrammar(map.get("S")));
+	Grammar toCnfGrammar() {
+		return new Grammar(toCnfGrammar(map.get("S")));
 	}
 	
 	/**

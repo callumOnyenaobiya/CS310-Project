@@ -47,14 +47,14 @@ class Converter {
 	 * @param factors LZ77-factors or G-factors.
 	 * @return a balanced SLP.
 	 */
-	CnfGrammar constructGrammar(String[] factors) {
+	Grammar constructGrammar(String[] factors) {
 		Node node = create(factors[0]);
 		for (int i = 1; i < factors.length; i++) {
 			node = concatenate(node, create(factors[i]));
 		}
-		CnfGrammar cnfGrammar = new CnfGrammar(node);
-		cnfGrammar.getStartNode().setName("S");
-		return cnfGrammar;
+		Grammar grammar = new Grammar(node);
+		grammar.getStartNode().setName("S");
+		return grammar;
 	}
 	
 	/**

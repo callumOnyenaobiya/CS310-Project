@@ -85,8 +85,8 @@ public class Main {
 	 * 
 	 */
 	public static void grammarMenu() {
-		CnfGrammar cnfGrammar = parseGrammar();
-		if(cnfGrammar == null) {
+		Grammar grammar = parseGrammar();
+		if(grammar == null) {
 			return;
 		}
 		System.out.println("Grammar successfully parsed.");
@@ -100,13 +100,13 @@ public class Main {
 			option = input.nextLine();
 			switch(option) {
 			case("t"):
-				viewParseTree(cnfGrammar);
+				viewParseTree(grammar);
 				break;
 			case("b"):
-				cnfGrammar = balanceGrammar(cnfGrammar);
+				grammar = balanceGrammar(grammar);
 				break;
 			case("g"):
-				grammarFactors(cnfGrammar);
+				grammarFactors(grammar);
 				break;
 			}
 		} while(!option.equals("q"));
@@ -114,20 +114,20 @@ public class Main {
 	
 	/**
 	 * Displays the parse tree of a given CnfGrammar.
-	 * @param cnfGrammar CnfGrammar to be displayed as parse tree.
+	 * @param grammar CnfGrammar to be displayed as parse tree.
 	 */
-	public static void viewParseTree(CnfGrammar cnfGrammar) {
-		cnfGrammar.printTree();
+	public static void viewParseTree(Grammar grammar) {
+		grammar.printTree();
 	}
 
 	/**
 	 * Takes use input file to parse.
 	 * @return CnfGrammar object of parsed grammar.
 	 */
-	public static CnfGrammar parseGrammar() {
+	public static Grammar parseGrammar() {
 		System.out.println("Enter grammar file to parse: ");
 		String file = input.nextLine();
-		CFG cfg = new CFG(file);
+		GrammarParser cfg = new GrammarParser(file);
 		if(cfg.map.size() == 0) {
 			System.out.println("Empty grammar received");
 			return null;
@@ -145,25 +145,25 @@ public class Main {
 	}
 
 	/**
-	 * @param cnfGrammar
+	 * @param grammar
 	 * @return
 	 */
-	public static CnfGrammar balanceGrammar(CnfGrammar cnfGrammar) {
+	public static Grammar balanceGrammar(Grammar grammar) {
 		System.out.println("Enter output file name: ");
 		String fileOut = input.nextLine();
-		cnfGrammar.balanceGrammar(0);
-		productionsToFile(cnfGrammar, fileOut);
-		return cnfGrammar;
+		grammar.balanceGrammar(0);
+		productionsToFile(grammar, fileOut);
+		return grammar;
 
 	}
 
 	/**
-	 * @param cnfGrammar
+	 * @param grammar
 	 */
-	public static void grammarFactors(CnfGrammar cnfGrammar) {
-		cnfGrammar.loadGfactors();
-		System.out.println("Grammar factors of "+cnfGrammar.evaluate()+":");
-		for(String s : cnfGrammar.getgFactors()) {
+	public static void grammarFactors(Grammar grammar) {
+		grammar.loadGfactors();
+		System.out.println("Grammar factors of "+grammar.evaluate()+":");
+		for(String s : grammar.getgFactors()) {
 			System.out.println(s);
 		}
 	}
@@ -283,18 +283,18 @@ public class Main {
 			return;
 		}
 		
-		CnfGrammar cnfgrammar = converter.constructGrammar(lz77Compressor.getTuples(encodedData));
+		Grammar cnfgrammar = converter.constructGrammar(lz77Compressor.getTuples(encodedData));
 		cnfgrammar.printTree();
 		productionsToFile(cnfgrammar, fileOut);
 	}
 	
 	/**
-	 * @param cnfGrammar CnfGrammar to be stored.
+	 * @param grammar CnfGrammar to be stored.
 	 * @param file File location for CnfGrammar
 	 */
-	public static void productionsToFile(CnfGrammar cnfGrammar, String file) {
+	public static void productionsToFile(Grammar grammar, String file) {
 		try (PrintWriter out = new PrintWriter(file)) {
-			String[] productions = cnfGrammar.getProductions().toArray(new String[0]);
+			String[] productions = grammar.getProductions().toArray(new String[0]);
 			for(int i = 0; i < productions.length - 1; i++) {
 				out.println(productions[i]);
 			}

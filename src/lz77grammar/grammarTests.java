@@ -16,8 +16,8 @@ class grammarTests {
 	 */
 	@Test
 	void parseGrammarTest() {
-		CFG cfg = new CFG("grammarTest.txt");
-		CnfGrammar cnfGrammar = cfg.toCnfGrammar();
+		GrammarParser cfg = new GrammarParser("grammarTest.txt");
+		Grammar grammar = cfg.toCnfGrammar();
 		
 		
 		Terminal G = new Terminal("G", 'g');
@@ -27,10 +27,10 @@ class grammarTests {
 		Terminal C = new Terminal("C", 'c');
 		Branch B = new Branch("B", D,E);
 		Branch S = new Branch("S",B,C);
-		CnfGrammar expectedCnfGrammar = new CnfGrammar(S);
+		Grammar expectedCnfGrammar = new Grammar(S);
 		
 
-		assertEquals(expectedCnfGrammar, cnfGrammar);
+		assertEquals(expectedCnfGrammar, grammar);
 	}
 
 	/**
@@ -38,7 +38,7 @@ class grammarTests {
 	 */
 	@Test
 	void slpTest1() {
-		CFG cfg = new CFG("grammarTest.txt");
+		GrammarParser cfg = new GrammarParser("grammarTest.txt");
 		assertFalse(cfg.isCyclic());
 	}
 	
@@ -47,7 +47,7 @@ class grammarTests {
 	 */
 	@Test
 	void cnfTest1() {
-		CFG cfg = new CFG("grammarTest.txt");
+		GrammarParser cfg = new GrammarParser("grammarTest.txt");
 		assertTrue(cfg.isCNF());
 	}
 	
@@ -56,7 +56,7 @@ class grammarTests {
 	 */
 	@Test
 	void slpTest2() {
-		CFG cfg = new CFG("grammarTest2.txt");
+		GrammarParser cfg = new GrammarParser("grammarTest2.txt");
 		assertTrue(cfg.isCyclic());
 	}
 	
@@ -65,7 +65,7 @@ class grammarTests {
 	 */
 	@Test
 	void cnfTest2() {
-		CFG cfg = new CFG("grammarTest2.txt");
+		GrammarParser cfg = new GrammarParser("grammarTest2.txt");
 		assertFalse(cfg.isCNF());
 	}
 	
@@ -79,8 +79,8 @@ class grammarTests {
 		Terminal terminal1 = new Terminal("terminal1", 'a');
 		Terminal terminal2 = new Terminal("terminal2", 'b');
 		Branch branch1 = new Branch("branch1", terminal1, terminal2);
-		CnfGrammar cnfGrammar = new CnfGrammar(branch1);
-		assertTrue(cnfGrammar.isBalanced());
+		Grammar grammar = new Grammar(branch1);
+		assertTrue(grammar.isBalanced());
 	}
 	
 	/**
@@ -95,8 +95,8 @@ class grammarTests {
 		Branch branch2 = new Branch("branch2", branch1, terminal2);
 		Branch branch3 = new Branch("branch3", branch2, terminal2);
 		
-		CnfGrammar cnfGrammar = new CnfGrammar(branch3);
-		assertFalse(cnfGrammar.isBalanced());
+		Grammar grammar = new Grammar(branch3);
+		assertFalse(grammar.isBalanced());
 	}
 	
 	/**
@@ -111,9 +111,9 @@ class grammarTests {
 		Branch branch2 = new Branch("branch2", branch1, terminal2);
 		Branch branch3 = new Branch("branch3", branch2, terminal2);
 		
-		CnfGrammar cnfGrammar = new CnfGrammar(branch3);
-		cnfGrammar.balanceGrammar(0);
-		assertTrue(cnfGrammar.isBalanced());
+		Grammar grammar = new Grammar(branch3);
+		grammar.balanceGrammar(0);
+		assertTrue(grammar.isBalanced());
 	}
 
 }
