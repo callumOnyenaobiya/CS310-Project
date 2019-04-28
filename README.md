@@ -83,6 +83,9 @@ grammar is then loaded into the program and is given the same menu options.
 On input “g” after successfully loading a grammar file, the user can view a list
 of the G-factors of the inputted grammar.
 
+### Querying a Grammar
+On input “get” after successfully loading a grammar file, the user is required to enter the desired position. The program will then output the character located at the given position, provided the position inputted is at most the size of the grammar
+
 Signature Data Structure Operations
 -----------------------------------
 
