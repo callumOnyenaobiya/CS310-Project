@@ -29,7 +29,6 @@ class Branch implements Node, Cloneable {
 	 */
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
 		return left.size() + right.size();
 	}
 
@@ -163,7 +162,6 @@ class Branch implements Node, Cloneable {
 	 */
 	@Override
 	public int getBalance() {
-		// TODO Auto-generated method stub
 		return left.getHeight() - right.getHeight();
 	}
 	

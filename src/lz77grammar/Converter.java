@@ -302,19 +302,4 @@ class Converter {
 	    }
 		return result;
 	}
-	
-	/**
-	 * @param string
-	 */
-	private void tutorialMode(String string) {
-		System.out.println(string);
-	}
-	
-	/**
-	 * Prints out parse tree rooted at given node.
-	 * @param node Root node.
-	 */
-	private void tutorialTree(Node node) {
-		treeprinter.print(node);
-	}
 }

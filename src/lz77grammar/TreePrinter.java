@@ -6,8 +6,8 @@ import java.util.List;
 class TreePrinter {
 
 	/**
-	 * Print a tree
-	 * Inspired by https://stackoverflow.com/a/29704252
+	 * Print a tree Inspired by https://stackoverflow.com/a/29704252
+	 * 
 	 * @param root Root of printed tree.
 	 */
 	void print(TreePrinterNode root) {
@@ -63,7 +63,6 @@ class TreePrinter {
 			if (i > 0) {
 				for (int j = 0; j < line.size(); j++) {
 
-					// split TreePrinterNode
 					char c = ' ';
 					if (j % 2 == 1) {
 						if (line.get(j - 1) != null) {
@@ -75,7 +74,6 @@ class TreePrinter {
 					}
 					System.out.print(c);
 
-					// lines and spaces
 					if (line.get(j) == null) {
 						for (int k = 0; k < perpiece - 1; k++) {
 							System.out.print(" ");
@@ -101,7 +99,6 @@ class TreePrinter {
 				System.out.println();
 			}
 
-			// print line of numbers
 			for (int j = 0; j < line.size(); j++) {
 
 				String f = line.get(j);
@@ -110,7 +107,6 @@ class TreePrinter {
 				int gap1 = (int) Math.ceil(perpiece / 2f - f.length() / 2f);
 				int gap2 = (int) Math.floor(perpiece / 2f - f.length() / 2f);
 
-				// a number
 				for (int k = 0; k < gap1; k++) {
 					System.out.print(" ");
 				}

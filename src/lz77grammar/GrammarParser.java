@@ -153,7 +153,7 @@ import java.util.List;
 	}
 
 	/**
-	 * @author callum
+	 * @author Callum Onyenaobiya
 	 * Object to represent parsed NonTerminals in CFG.
 	 */
 	private class NonTerminal {

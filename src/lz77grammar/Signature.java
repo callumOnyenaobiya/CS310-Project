@@ -20,13 +20,11 @@ class Signature implements Element, Serializable {
 	
 	@Override
 	public char getChar() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getPow() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 

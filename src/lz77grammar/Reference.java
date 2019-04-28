@@ -8,42 +8,30 @@ import java.io.Serializable;
  * 
  */
 class Reference implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	// offset points to the beginning of a match relative
-	// to the current location. Has a value of 0 if there
-	// is no match.
-	int offset;
-	// stringLen specifies the length of the match or 0 if
-	// there is no match
-	int stringLen;
-	// nextChar is the first non-matching character
-	// following the match, or the only character if there
-	// is no match.
-	String nextChar;
-	// ---------------------------------------------------//
 
-	// Constructor
+	int offset;
+
+	int stringLen;
+
+	String nextChar;
+
 	Reference(int offset, int stringLen, String nextChar) {
 		this.offset = offset;
 		this.stringLen = stringLen;
 		this.nextChar = nextChar;
-	}// end constructor
-		// ---------------------------------------------------//
+	}
 
 	/**
-	 *
+	 * Desired format for string representation of reference.
 	 */
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "Offset: " + offset + ", stringLen :" + stringLen + ", nextChar: " + nextChar;
 	}
 
 	/**
-	 *
+	 * Overrided equals. Two references are equal of their offset, stringLen and nextChar values are equal.
 	 */
 	@Override
 	public boolean equals(Object obj) {

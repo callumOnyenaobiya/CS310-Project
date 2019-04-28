@@ -29,13 +29,11 @@ class Power implements Element, Serializable {
 
 	@Override
 	public char getChar() {
-		// TODO Auto-generated method stub
 		return character;
 	}
 
 	@Override
 	public int getPow() {
-		// TODO Auto-generated method stub
 		return power;
 	}
 
@@ -51,7 +49,6 @@ class Power implements Element, Serializable {
 
 	@Override
 	public int getSig() {
-		// TODO Auto-generated method stub
 		return this.signature;
 	}
 
@@ -60,7 +57,6 @@ class Power implements Element, Serializable {
 	 */
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return character + "^" + power;
 	}
 
