@@ -96,6 +96,7 @@ public class Main {
 			System.out.println("t - view parse tree");
 			System.out.println("b - balance grammar");
 			System.out.println("g - compute gFactors");
+			System.out.println("get - retrieve character at given position");
 			System.out.println("q - back");
 			option = input.nextLine();
 			switch(option) {
@@ -108,8 +109,21 @@ public class Main {
 			case("g"):
 				grammarFactors(grammar);
 				break;
+			case("get"):
+				getCharacter(grammar);
+				break;
 			}
 		} while(!option.equals("q"));
+	}
+	
+	public static void getCharacter(Grammar grammar) {
+		System.out.println("Enter position: ");
+		int position = intInput.nextInt();
+		if(position > grammar.size()) {
+			System.out.println("Position must be <= grammar size.");
+			return;
+		}
+		System.out.println("The character at position " + position + " is: " + Character.toString(grammar.get(position)));
 	}
 	
 	/**

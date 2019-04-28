@@ -107,6 +107,23 @@ class Grammar {
 	void printTree() {
 		treeprinter.print(startNode);
 	}
+	
+	/**
+	 * 
+	 * @param i The desired position.
+	 * @return The character at position i.
+	 */
+	char get(int i) {
+		return startNode.get(i);
+	}
+	
+	/**
+	 * Calculates the size of the grammar rooted at the start node.
+	 * @return The size of the grammar rooted at startNode.
+	 */
+	int size() {
+		return startNode.size();
+	}
 
 	/**
 	 * Overrided implementation of equals. Equality based on Equality of starting nodes.
