@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests relating to all signature store data structure operations.
- * @author callum
+ * @author Callum Onyenaobiya
  * 
  */
 class signatureStoreTests {
