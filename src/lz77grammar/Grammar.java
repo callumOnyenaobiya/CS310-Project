@@ -48,6 +48,14 @@ class Grammar {
 	Boolean isBalanced() {
 		return this.startNode.getBalance() == 0 || this.startNode.getBalance() == 1;
 	}
+	
+	/**
+	 * 
+	 * @return The balance of the subtree rooted at start node.
+	 */
+	int getBalance() {
+		return this.startNode.getBalance();
+	}
 
 	List<String> getgFactors() {
 		return gFactors;

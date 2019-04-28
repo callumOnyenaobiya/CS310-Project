@@ -104,6 +104,7 @@ public class Main {
 			return;
 		}
 		System.out.println("Grammar successfully parsed.");
+		System.out.println("Balanced = " + grammar.getBalance());
 		String option;
 		do {
 			System.out.println("Select an option: ");
@@ -137,7 +138,10 @@ public class Main {
 			System.out.println("Position must be <= grammar size.");
 			return;
 		}
-		System.out.println("The character at position " + position + " is: " + Character.toString(grammar.get(position)));
+		long startTime = System.nanoTime();
+		String result = Character.toString(grammar.get(position));
+		long endTime = System.nanoTime();
+		System.out.println("The character at position " + position + " is: " + result +", in time: " + (endTime - startTime) +" nanoseconds.");
 	}
 	
 	/**
