@@ -117,7 +117,7 @@ obtained a signature value for each sequence, the program displays a parse tree
 for both sequences and a simple equality comparison is conducted between both
 integral values to confirm whether they are equal.
 
-#### Saving a Store For Later Use.
+### Saving a Store For Later Use.
 
 On input “s” of the original signature store menu, the user is required to enter
 a desired output file name. The current signature store is then saved in the
